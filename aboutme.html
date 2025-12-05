@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sobre mí - Manuel Martín Martín</title>
+<style>
+:root{
+  --bg:#393E4D;
+  --header-bg:#17191e;
+  --panel:#17191e;
+  --accent:#00bfff;
+  --text:#f3f4f6;
+  --radius:14px;
+  --transition:0.3s ease;
+}
+
+/* reset */
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  background:var(--bg);
+  color:var(--text);
+  margin:0;
+  height:100vh;
+  padding-top:80px;
+  scroll-behavior:smooth;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background-image:url('img/Banner.png');
+  background-repeat:repeat;
+  background-size:auto;
+  opacity:0.2;
+  z-index:-1;
+}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;left:0;width:100%;
+  background:var(--header-bg);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 36px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.6);
+  z-index:1000;
+}
+header h1{font-size:1.6rem;color:var(--accent);font-weight:600;}
+.header-left{display:flex;align-items:center;gap:12px;}
+nav{display:flex;align-items:center;gap:18px}
+
+/* Social Links */
+.social-icons{display:flex;align-items:center;gap:10px;}
+.social-icons a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  overflow:hidden;background:rgba(255,255,255,0.05);
+  transition:transform 0.25s ease,background 0.25s ease;
+}
+.social-icons a:hover{background:var(--accent);transform:scale(1.1);}
+.social-icons img{width:30px;height:30px;filter:brightness(0) invert(1);}
+
+/* Links y botones */
+.nav-item{position:relative}
+.nav-link{
+  background:none;border:0;color:var(--text);font:inherit;
+  cursor:pointer;padding:8px 12px;border-radius:10px;
+  transition:background var(--transition),color var(--transition);
+  text-decoration:none;
+}
+.nav-link:hover{background:var(--accent);color:#fff}
+
+/* botón CV */
+.cv-button{
+  background:var(--accent);color:#fff;border:none;font-weight:600;
+  padding:8px 14px;border-radius:10px;cursor:pointer;
+  transition:background var(--transition),transform var(--transition);
+  text-decoration:none;
+}
+.cv-button:hover{background:#0090cc;transform:translateY(-2px);}
+
+/* dropdown */
+.dropdown{
+  position:absolute;top:110%;right:0;
+  background:var(--panel);
+  border-radius:var(--radius);
+  box-shadow:0 8px 22px rgba(0,0,0,0.45);
+  display:none;flex-direction:column;
+  min-width:200px;z-index:1001;
+  opacity:0;
+  transform:translateY(-10px);
+  transition:opacity 0.25s ease, transform 0.25s ease;
+}
+.dropdown.show{
+  display:flex;
+  opacity:1;
+  transform:translateY(0);
+}
+.dropdown a,.dropdown button{
+  color:var(--text);text-decoration:none;background:none;border:none;
+  text-align:left;padding:10px 14px;cursor:pointer;font:inherit;
+}
+.dropdown a:hover,.dropdown button:hover{background:var(--accent);color:#fff}
+
+/* main */
+main{
+  flex:1;width:100%;max-width:1500px;margin:0 auto;
+  padding:40px 24px;text-align:left;
+}
+section{margin-bottom:40px;}
+section h2{text-align:center;margin-bottom:24px;color:var(--accent);font-size:3.8rem;}
+section p{line-height:1.6;margin-bottom:20px;text-align:justify;font-size:1.4rem;}
+hr{border:0;height:1px;background:rgba(255,255,255,0.1);margin:40px 0;}
+
+.about-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  gap: 12px;                    
+  margin-bottom: 18px;        
+}
+
+.about-text {
+  flex: 0 0 62%;   
+  max-width: 62%;
+  min-width: 220px; 
+}
+
+.about-image {
+  flex: 0 0 36%;   
+  max-width: 36%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image img {
+  display: block;     
+  max-width: 100%;      
+  height: auto;
+  border-radius: 8px;   
+  margin: 0;           
+}
+
+
+
+@media (max-width: 768px) {
+  .about-row {
+    flex-direction: column;
+    gap: 8px;           
+    margin-bottom: 12px; 
+    align-items: stretch;
+  }
+
+  .about-text {
+    flex: 0 0 auto;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .about-image {
+    flex: 0 0 auto;
+    max-width: 100%;
+    margin-top: 6px;
+  }
+
+  .about-image img {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Botón solo visible en móvil */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.menu-toggle:hover {
+  color: #0090cc;
+}
+
+/* Mostrar boton y ocultar menú en pantallas pequeñas */
+@media (max-width: 768px) {
+  nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: var(--header-bg);
+    padding: 12px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  nav.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  header {
+    flex-wrap: wrap;
+  }
+
+  .nav-link, .cv-button {
+    text-align: center;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .dropdown {
+    position: static;
+    box-shadow: none;
+    background: none;
+    padding-left: 16px;
+  }
+}
+
+.about-row:last-of-type {
+  justify-content: center;        
+}
+
+.about-row:last-of-type .about-text {
+  text-align: center;             
+  max-width: 800px;              
+  margin: 0 auto;                
+}
+
+.about-row:last-of-type .about-text p {
+  text-align: center;            
+}
+
+.about-row:last-of-type .cats-image {
+  display: flex;
+  justify-content: center;       
+  margin: 20px 0;
+}
+
+.about-row:last-of-type .cats-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.about-row.three-cols {
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.about-row.three-cols .about-image {
+  flex: 0 0 28%;
+  max-width: 28%;
+}
+
+.about-row.three-cols .about-text {
+  flex: 0 0 44%;
+  max-width: 44%;
+}
+
+#section3,
+#section3b {
+  text-align: justify;
+}
+
+@media (max-width: 1024px) {
+  .about-row.three-cols .about-image {
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
+  .about-row.three-cols .about-text {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-row.three-cols {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .about-row.three-cols .about-image,
+  .about-row.three-cols .about-text {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 100%;
+  }
+  .about-row.three-cols .about-image img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: transparent;
+    padding: 12px 0px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: none;
+  }
+
+  nav.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  header {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--header-bg);
+    z-index: 1000;
+  }
+
+  .nav-link, .cv-button {
+    text-align: center;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: var(--panel);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+    display: none;
+    flex-direction: column;
+    min-width: 180px;
+    z-index: 1001;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .dropdown.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* footer */
+footer{text-align:center;font-size:0.9rem;opacity:0.7;padding:28px 0;border-top:1px solid rgba(255,255,255,0.04)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Manuel Martín</h1>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/nelar/" target="_blank"><img src="img/LinkedinIcon.png" alt="LinkedIn"></a>
+      <a href="https://nelar.itch.io/" target="_blank"><img src="img/ItchioIcon.png" alt="Itch.io"></a>
+    </div>
+  </div>
+
+  <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú">☰</button>
+
+  <nav>
+    <div class="nav-item">
+      <a id="nav-home" href="index.html" class="nav-link">Inicio</a>
+    </div>
+
+    <div class="nav-item">
+      <a id="nav-skills" class="nav-link" href="skills.html">Habilidades</a>
+    </div>
+
+    <!-- Dropdown de Proyectos -->
+    <div class="nav-item">
+      <button id="nav-projects" class="nav-link">Proyectos ▾</button>
+      <div id="projects-dropdown" class="dropdown" aria-hidden="true">
+        <a id="dropdown-all" href="projects.html">Ver todos</a>
+        <a href="https://store.steampowered.com/app/3587480/Underpacked/" target="_blank">Underpacked</a>
+        <a href="https://nacho-del-castillo.itch.io/bubblegum-royale" target="_blank">Bubble Gum Royale</a>
+        <a href="https://eddricman.itch.io/goofyathlon" target="_blank">Goofyathlon</a>
+        <a href="https://paxcu.itch.io/aftermath-fellows" target="_blank">Aftermath Fellows</a>
+        <a href="https://paxcu.itch.io/whoareyouagain" target="_blank">Who Are You Again?</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <button id="lang-btn" class="nav-link">🌐 Idioma ▾</button>
+      <div id="lang-dropdown" class="dropdown" aria-hidden="true">
+        <button data-lang="es">Español 🇪🇸</button>
+        <button data-lang="en">English 🇬🇧</button>
+      </div>
+    </div>
+
+    <a href="files/ManuelMartinMartinGameDesignCV.pdf" download class="cv-button">📄 CV</a>
+  </nav>
+</header>
+
+<main>
+  <section id="about">
+    <h2 id="about-title">Sobre mí</h2>
+    <div class="about-row">
+        <div class="about-text">
+            <p id="section1">
+            Holaaa desde que era pequeño he estado rodeado de videojuegos, ya sea en la nintendo DS con los Pokémon o en pc con los Metal Slug.
+            Eso me llevó a hacer durante las clases de informática, mis primer juego en ascii, una copia del Snake. Después de eso di el salto a Unity 
+            donde comencé a tomármelo más en serio, desde entonces no he parado de crear juegos ya sea en Unity, Unreal o Godot. Y después 
+            de ver a la gente divertirse con las cosas que hago me reafirma que este es el sitio en el que quiero estar.
+            </p>
+        </div>
+        <div class="about-image">
+            <img src="img/Guarrilla.png" alt="Guerrilla">
+        </div>
+    </div>
+
+    <hr>
+    <div class="about-row three-cols">
+        <div class="about-image">
+            <img src="img/GameJam.png" alt="GameJam">
+        </div>
+        <div class="about-text">
+            <p id="section2">
+                Por si no lo has notado este mundo me apasiona y siempre estoy trasteando con algo. Ya sea siguiendo un tutorial de como hacer 
+                un shader, o aprendiendo como mejorar en el ámbito de la programación, o simplemente dándole forma a ideas de juegos para hacer. 
+                Me encanta muchísimo el proceso creativo y técnico que hay detras de hacer videojuegos.
+            </p>
+        </div>
+        <div class="about-image">
+            <img src="img/ElJap.png" alt="ElJap">
+        </div>
+    </div>
+    
+    <hr>
+    <div class="about-row">
+        <div class="about-text">
+            <p id="section3">
+                Y ya fuera del ámbito del desarrollo, me encantan los animales estos son mis gatos:
+            </p>
+            <div class="cats-image">
+                <img src="img/Gatetes.png" alt="Mis gatitos">
+            </div>
+            <p id="section3b">
+                Por si no lo habías 
+                notado también me gusta mucho el anime y por desgracia el lol (🤘🏻😔) y salir a saltar a la comba, o simplemente 
+                hacer deporte para descansar del pc.
+            </p>
+        </div>
+    </div>
+
+  </section>
+</main>
+
+<footer>© <span id="year"></span> Manuel Martín Martín</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const langBtn = document.getElementById('lang-btn');
+  const langDropdown = document.getElementById('lang-dropdown');
+  const projectsBtn = document.getElementById('nav-projects');
+  const projectsDropdown = document.getElementById('projects-dropdown');
+
+  /* Idioma */
+  langBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const show = langDropdown.classList.toggle('show');
+    projectsDropdown.classList.remove('show');
+  });
+
+  /* Dropdown proyectos */
+  projectsBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const show = projectsDropdown.classList.toggle('show');
+    langDropdown.classList.remove('show');
+  });
+
+  document.addEventListener('click', () => {
+    langDropdown.classList.remove('show');
+    projectsDropdown.classList.remove('show');
+  });
+
+  /* Traducciones */
+  const texts = {
+    es: {
+        navHome: "Inicio",
+        navProjects: "Proyectos ▾",
+        navSkills: "Habilidades",
+        dropdownAll: "Ver todos",
+        langBtn: "🌐 Idioma ▾",
+        aboutTitle: "Sobre mí",
+        section1: 
+        "Holaaa desde que era pequeño he estado rodeado de videojuegos, ya sea en la Nintendo DS con los Pokémon o en pc con los Metal Slug. \
+        Eso me llevó a hacer durante las clases de informática, mi primer juego en ascii, una copia del Snake. Después de eso di el salto a \
+        Unity donde comencé a tomármelo más en serio, desde entonces no he parado de crear juegos ya sea en Unity, Unreal o Godot. Después de \
+        ver a la gente divertirse con las cosas que hago me reafirma que este es el sitio en el que quiero estar.",
+        section2: 
+        "Por si no lo has notado este mundo me apasiona y siempre estoy trasteando con algo; ya sea siguiendo un tutorial de como hacer un shader, \
+        aprendiendo como mejorar en el ámbito de la programación o simplemente dándole forma a ideas de juegos para hacer. Me encanta muchísimo el \
+        proceso creativo y técnico que hay detrás de hacer videojuegos. \
+        Aunque soy un poco tímido me encanta ir a eventos a conocer a otros desarrolladores o incluso a presentar mis juegos :0.",
+        section3:
+        "Y ya fuera del ámbito del desarrollo, me encantan los animales estos son mis gatos:",
+        section3b:
+        "También me gusta mucho el anime y, por desgracia... El lol (🤘🏻😔). \
+        También salir a saltar a la comba o simplemente hacer deporte para descansar del pc."
+    },
+    en: {
+        navHome: "Home",
+        navProjects: "Projects ▾",
+        navSkills: "Skills",
+        dropdownAll: "View All",
+        langBtn: "🌐 Language ▾",
+        aboutTitle: "About Me",
+        section1: 
+        "Heeey! Since I was a kid, I’ve been surrounded by video games. Playing Pokémon on my Nintendo DS or Metal Slug on PC. \
+        That made me create my first game in computer class, a little ASCII version of Snake. After that, I moved to Unity and started \
+        taking it more seriously. Since then, I haven’t stopped making games, using Unity, Unreal, or Godot. Seeing people have fun with \
+        what I make really makes me feel this is where I want to be.",
+        section2: 
+        "In case you haven’t noticed, I’m really passionate about this world and I’m always messing around with something. Whether it’s \
+        following a tutorial on how to make a shader, learning how to get better at programming, or just shaping new video game ideas. I really \
+        love the creative and technical process behind making video games. Even though I’m a bit shy, I love going to events to meet other developers or even show my own games :0.",
+        section3:
+        "And outside of game development, I really love animals. These are my cats:",
+        section3b:
+        "I also really like anime and, sadly... League of Legends (🤘🏻😔). I also enjoy jumping rope or just doing some sports to take a break from the PC."
+    }
+  };
+
+  function setLanguage(lang) {
+    localStorage.setItem('selectedLang', lang);
+    const t = texts[lang] || texts.es;
+    document.getElementById('nav-home').textContent = t.navHome;
+    document.getElementById('nav-projects').textContent = t.navProjects;
+    document.getElementById('nav-skills').textContent = t.navSkills;
+    document.getElementById('dropdown-all').textContent = t.dropdownAll;
+    document.getElementById('lang-btn').textContent = t.langBtn;
+    document.getElementById('about-title').textContent = t.aboutTitle;
+    document.getElementById('section1').textContent = t.section1;
+    document.getElementById('section2').textContent = t.section2;
+    document.getElementById('section3').textContent = t.section3;
+    document.getElementById('section3b').textContent = t.section3b;
+  }
+
+  const savedLang = localStorage.getItem('selectedLang') || 'es';
+  setLanguage(savedLang);
+
+  document.querySelectorAll('#lang-dropdown button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      setLanguage(lang);
+      langDropdown.classList.remove('show');
+    });
+  });
+});
+
+// Menú móvil
+const menuToggle = document.getElementById('menu-toggle');
+const nav = document.querySelector('nav');
+
+menuToggle.addEventListener('click', () => {
+  nav.classList.toggle('show');
+});
+
+// Cerrar menú al hacer clic fuera o en un enlace
+document.addEventListener('click', (e) => {
+  if (!header.contains(e.target)) {
+    nav.classList.remove('show');
+  }
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

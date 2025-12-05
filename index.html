@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Portfolio - Manuel Martín Martín</title>
+<style>
+:root{
+  --bg:#393E4D;
+  --header-bg:#17191E;
+  --panel:#17191E;
+  --accent:#00bfff;
+  --text:#f3f4f6;
+  --radius:14px;
+  --transition:0.3s ease;
+}
+
+/* reset */
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  background:var(--bg);
+  color:var(--text);
+  margin:0;
+  height: 100vh;
+  padding-top:80px;
+  scroll-behavior:smooth;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/Banner.png');
+  background-repeat: repeat;
+  background-size: auto;
+  opacity: 0.2; 
+  z-index: -1; 
+}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;left:0;width:100%;
+  background:var(--header-bg);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 36px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.6);
+  z-index:1000;
+}
+header h1{font-size:1.6rem;color:var(--accent);font-weight:600;}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* separación entre nombre e iconos */
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+nav{display:flex;align-items:center;gap:18px;position:relative}
+
+/* About Section */
+
+.about-section{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.about-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1000px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.about-text {
+  flex: 1 1 50%;
+  text-align: left;
+}
+
+.about-text h2 {
+  color: var(--accent);
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.about-image {
+  flex: 1 1 45%;
+  display: flex;
+  justify-content: center;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+  object-fit: cover;
+}
+
+/* Social Links */
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.social-icons a:hover {
+  background: var(--accent);
+  transform: scale(1.1);
+}
+
+.social-icons img {
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) invert(1); /* los pone blancos sobre fondo oscuro */
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+section {
+  scroll-margin-top: 100px; /* ajusta este valor según la altura del header */
+}
+
+/* links */
+.nav-item{position:relative}
+.nav-link{
+  background:none;border:0;color:var(--text);font:inherit;
+  cursor:pointer;padding:8px 12px;border-radius:10px;
+  transition:background var(--transition),color var(--transition);
+  text-decoration:none;
+}
+.nav-link:hover{background:var(--accent);color:#fff}
+
+.project-item-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  border-radius: var(--radius);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.project-item-link:hover .project-item {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,191,255,0.25);
+  cursor: pointer;
+}
+
+/* botón CV */
+.cv-button{
+  background:var(--accent);color:#fff;border:none;font-weight:600;
+  padding:8px 14px;border-radius:10px;cursor:pointer;
+  transition:background var(--transition),transform var(--transition);
+  text-decoration:none;
+}
+.cv-button:hover{background:#0090cc;transform:translateY(-2px);}
+
+.about-text .cv-button {
+  margin-top: 24px;
+  display: inline-block;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* dropdown - floating style (como en skills.html) */
+.dropdown{
+  position:absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background:var(--panel);
+  border-radius:var(--radius);
+  box-shadow:0 8px 22px rgba(0,0,0,0.45);
+  display:flex;
+  flex-direction:column;
+  min-width:200px;
+  z-index:1001;
+  opacity:0;
+  transform:translateY(-8px);
+  transition:opacity 0.25s ease, transform 0.25s ease;
+  pointer-events:none;
+}
+.dropdown.show{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+.dropdown a, .dropdown button{
+  color:var(--text);text-decoration:none;background:none;border:none;
+  text-align:left;padding:10px 14px;cursor:pointer;font:inherit;width:100%;
+}
+.dropdown a:hover, .dropdown button:hover{background:var(--accent);color:#fff}
+
+/* main */
+main{
+  flex:1;width:100%;max-width:1000px;margin:0 auto;
+  padding:40px 20px;text-align:left;
+}
+section{width:100%;margin-bottom:60px}
+section h2{text-align:center;margin-bottom:28px;color:var(--accent);font-size:1.8rem;}
+section p{line-height:1.6;margin-bottom:20px;text-align:left; font-size: 1.4rem;}
+
+/* proyectos */
+.project-list{display:flex;flex-direction:column;gap:26px}
+.project-item{
+  display:flex;align-items:center;gap:20px;
+  background:var(--panel);border-radius:var(--radius);
+  box-shadow:0 6px 16px rgba(0,0,0,0.45);
+  padding:18px;position:relative;
+  transition:transform var(--transition),box-shadow var(--transition);
+}
+.project-item-link:hover .project-item {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px var(--accent);
+}
+
+/* imagen */
+.project-image{
+  flex:0 0 180px;height:120px;background:#0f1115;
+  border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+.project-image img{
+  height:100%;
+  width:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* contenido */
+.project-content{flex:1;position:relative}
+.project-content h3{font-size:1.15rem;color:var(--accent);margin-bottom:6px}
+.project-content p{font-size:0.95rem;opacity:0.9;line-height:1.45;margin-bottom:6px}
+.project-content a{color:#00BFFF;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* etiquetas */
+.project-tags{
+  position:absolute;
+  bottom:0px;
+  right:14px;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  align-items:center;
+  pointer-events:none;
+}
+
+
+.project-content {
+  flex:1;
+  position:relative;
+  padding-bottom:28px; /* deja espacio para las etiquetas */
+}
+
+.tag{
+  background:rgba(0,191,255,0.15);
+  border:1px solid rgba(0,191,255,0.3);
+  color:var(--accent);
+  font-size:0.75rem;
+  padding:3px 8px;
+  border-radius:8px;
+  backdrop-filter:blur(4px);
+  pointer-events:auto;
+}
+
+.tag-yellow{
+  background:rgba(255,215,0,0.25);
+  color: #FFD700;
+  font-weight: 600;
+  border: 1px solid rgba(255,215,0,0.3);
+  box-shadow: 0 0 6px rgba(255,215,0,0.4);
+  backdrop-filter: blur(4px);
+}
+
+/* Botón "Ver todos" */
+.view-all-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.view-all-button {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+  font-size: 1.05rem;
+}
+
+.view-all-button:hover {
+  background: #0090cc;
+  transform: translateY(-2px);
+}
+
+/* contact section */
+.contact-section {
+  width: 100%;
+  max-width: 800px;
+  margin: 40px auto 20px auto;
+  text-align: center;
+  background: var(--panel);
+  padding: 30px 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+}
+
+.contact-section h2 {
+  color: var(--accent);
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+.contact-icons {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-item img {
+  width: 50px;
+  height: 50px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.25s ease, filter 0.25s ease, filter 0.25s ease;
+}
+
+.contact-item a:hover img,
+.icon-button:hover img {
+  transform: scale(1.1);
+  filter: brightness(0) saturate(100%) invert(56%) sepia(89%) saturate(1807%) hue-rotate(171deg) brightness(102%) contrast(101%);
+}
+
+.contact-item p {
+  font-size: 1rem;
+  opacity: 0.85;
+  word-break: break-word;
+}
+
+/* Estilo del botón de gmail */
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.icon-button img {
+  width: 50px;
+  height: 50px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.icon-button:hover img {
+  transform: scale(1.1);
+  filter: brightness(0) saturate(100%) invert(56%) sepia(89%) saturate(1807%) hue-rotate(171deg) brightness(102%) contrast(101%);
+}
+
+/* Mensaje de copiado */
+.copy-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--accent);
+  color: #fff;
+  padding: 16px 28px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 3000;
+}
+
+.copy-message.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+
+/* Botón solo visible en móvil */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.menu-toggle:hover {
+  color: #0090cc;
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding:12px 18px;
+  }
+
+  .menu-toggle {
+    display: block;
+    order: 3;
+    margin-left: 8px;
+    margin-top: 50;
+  }
+
+  nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: var(--header-bg);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    padding: 14px 16px;
+    gap: 30px; /* ← Aumenta la separación entre los botones */
+    z-index: 900;
+  }
+
+  nav.show {
+    display: flex;
+  }
+
+  .nav-link, .cv-button {
+    text-align: left;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .header-left {
+    flex: 1;
+  }
+}
+
+/* responsive */
+@media (max-width:880px){
+  .project-image{flex:0 0 150px;height:100px}
+}
+@media (max-width:640px){
+  /* evitar que el header pase a columna en pantallas muy pequeñas */
+  header{flex-direction:row;align-items:center;gap:10px;padding:10px 12px}
+  .project-item{flex-direction:column;text-align:center}
+  .project-image{width:100%;height:180px}
+  .project-tags{position:static;justify-content:center;margin-top:6px;}
+  .social-icons {
+    margin-left: 0;
+    margin-top: 6px;
+  }
+  @media (max-width: 800px) {
+    .about-container {
+      flex-direction: column-reverse;
+      text-align: center;
+    }
+
+    .about-text {
+      text-align: center;
+    }
+
+    .about-image img {
+      max-width: 300px;
+    }
+  }
+}
+
+/* footer */
+footer{text-align:center;font-size:0.9rem;opacity:0.7;padding:28px 0;border-top:1px solid rgba(255,255,255,0.04)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Manuel Martín</h1>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/nelar/" target="_blank"><img src="img/LinkedinIcon.png" alt="LinkedIn"></a>
+      <a href="https://nelar.itch.io/" target="_blank"><img src="img/ItchioIcon.png" alt="Itch.io"></a>
+    </div>
+  </div>
+
+  <div class="header-right">
+      <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú">☰</button>
+  </div>
+
+  <nav>
+    <div class="nav-item">
+      <a id="nav-about" class="nav-link" href="aboutme.html">About Me</a>
+    </div>
+
+    <div class= "nav-item">
+        <a id="nav-skills" class="nav-link" href="skills.html"></a>
+    </div>
+
+    <div class="nav-item">
+      <button id="projects-btn" class="nav-link" aria-haspopup="true" aria-expanded="false">Proyectos ▾</button>
+      <div id="projects-dropdown" class="dropdown" aria-hidden="true">
+        <a id="dropdown-all" href="projects.html">Ver todos</a>
+        <a href="https://store.steampowered.com/app/3587480/Underpacked/" target="_blank">Underpacked</a>
+        <a href="https://nacho-del-castillo.itch.io/bubblegum-royale" target="_blank">Bubble Gum Royale</a>
+        <a href="https://eddricman.itch.io/goofyathlon" target="_blank">Goofyathlon</a>
+        <a href="https://paxcu.itch.io/aftermath-fellows" target="_blank">Aftermath Fellows</a>
+        <a href="https://paxcu.itch.io/whoareyouagain" target="_blank">Who Are You Again?</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <button id="lang-btn" class="nav-link" aria-haspopup="true" aria-expanded="false">🌐 Idioma ▾</button>
+      <div id="lang-dropdown" class="dropdown" aria-hidden="true">
+        <button data-lang="es">Español 🇪🇸</button>
+        <button data-lang="en">English 🇬🇧</button>
+      </div>
+    </div>
+
+    <a href="files/ManuelMartinMartinGameDesignCV.pdf" download class="cv-button">📄 CV</a>
+  </nav>
+</header>
+
+<main>
+  <section id="about" class="about-section">
+    <div class="about-container">
+        <div class="about-text">
+            <h2 id="about-title">About Me</h2>
+            <p id="about-text" style="max-width:820px;margin:0 auto;text-align:justify;line-height:1.6">
+            Soy diseñador y programador de videojuegos con pasión por crear mundos interactivos, sistemas equilibrados y experiencias memorables. Trabajo con Unreal Engine y Godot, diseñando niveles que guían al jugador de forma intuitiva.
+            </p>
+            <a id="cv-link" href="files/ManuelMartinMartinGameDesignCV.pdf" download class="cv-button">📄 Download my CV</a>
+        </div>
+        <div class="about-image">
+            <img src="img/YoDibujo.png" alt= "Manuel Martín Martín"/>
+        </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2 id="projects-title">Proyectos</h2>
+    <div class="project-list">
+
+      <!-- Underpacked -->
+      <a href="https://store.steampowered.com/app/3587480/Underpacked/" target="_blank" class="project-item-link">
+        <div class="project-item">
+            <div class="project-image">    
+                <img src="img/UnderPackedLogo.jpg" alt="Underpacked">
+            </div>
+            <div class="project-content">
+                <h3>Underpacked</h3>
+                <p id="desc-underpacked">Co-op local donde gestionas una nave y envías paquetes mientras defiendes la cabina.</p>
+                <div class="project-tags">
+                    <span class="tag">Master's Degree Final Project</span>
+                    <span class="tag">Unreal Engine 5</span>
+                    <span class="tag">Local Co-op</span>
+                    <span class="tag tag-yellow">In progress</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+      <!-- Bubble Gum Royale -->
+      <a href="https://nacho-del-castillo.itch.io/bubblegum-royale" target="_blank" class="project-item-link">
+        <div class="project-item">
+            <div class="project-image">    
+                <img src="img/BubbleGumRoyale.png" alt="Bubble Gum Royale">
+            </div>
+            <div class="project-content">
+                <h3>Bubble Gum Royale</h3>
+                <p id="desc-bubblegum"></p>
+                <div class="project-tags">
+                    <span class="tag">Game Jam</span>
+                    <span class="tag">Unity</span>
+                    <span class="tag">Local Multiplayer</span>
+                </div>
+            </div>
+        </div>
+      </a>
+
+      <!-- Goofyathlon -->
+      <a href="https://eddricman.itch.io/goofyathlon" target="_blank" class="project-item-link">
+        <div class="project-item">
+            <div class="project-image">    
+                <img src="img/GoofyAthlon.png" alt="Goofyathlon">
+            </div>
+            <div class="project-content">
+                <h3>Goofyathlon</h3>
+                <p id="desc-goofyathlon"></p>
+                <div class="project-tags">
+                    <span class="tag">Game Jam</span>
+                    <span class="tag">Unity</span>
+                    <span class="tag">Mobile Controller</span>
+                </div>
+            </div>
+        </div>
+      </a>
+      
+      <!-- Aftermath Fellows -->
+      <a href="https://paxcu.itch.io/aftermath-fellows" target="_blank" class="project-item-link">
+        <div class="project-item">
+            <div class="project-image">    
+                <img src="img/AftermathFellows.png" alt="Aftermath Fellows">
+            </div>
+            <div class="project-content">
+                <h3>Aftermath Fellows</h3>
+                <p id="desc-aftermathFellows"></p>
+                <div class="project-tags">
+                    <span class="tag">Game Jam</span>
+                    <span class="tag">Unity</span>
+                </div>
+            </div>
+        </div>
+      </a>
+      
+      <!-- Who are you again? -->
+      <a href="https://paxcu.itch.io/whoareyouagain" target="_blank" class="project-item-link">
+        <div class="project-item">
+            <div class="project-image">    
+                <img src="img/WhoAreYouAgain.png" alt="Who are you again?">
+            </div>
+            <div class="project-content">
+                <h3>Who Are You Again?</h3>
+                <p id="desc-whoareyouagain"></p>
+                <div class="project-tags">
+                    <span class="tag">Game Jam</span>
+                    <span class="tag">Unity</span>
+                    <span class="tag">Cozy</span>
+                </div>
+            </div>
+        </div>
+      </a>
+    <div class="view-all-container">
+        <a id="view-all-btn" href="projects.html" class="view-all-button">Ver todos</a>
+    </div>
+  </section>
+</main>
+
+<!-- SECCIÓN DE CONTACTO -->
+<section id="contact" class="contact-section">
+  <h2 id="contact-title">Contáctame vía:</h2>
+  <div class="contact-icons">
+    <div class="contact-item">
+      <button id="copy-email-btn" class="icon-button" aria-label="Copiar correo">
+        <img src="img/GmailIcon.png" alt="Gmail">
+      </button>
+      <p id="email-text">nelardev@gmail.com</p>
+    </div>
+
+    <div class="contact-item">
+      <a href="https://www.linkedin.com/in/nelar/" target="_blank">
+        <img src="img/LinkedinIcon.png" alt="LinkedIn">
+      </a>
+      <p>Manuel Martín Martín</p>
+    </div>
+  </div>
+
+  <!-- Mensaje flotante -->
+  <div id="copy-message" class="copy-message" aria-live="polite"></div>
+</section>
+
+<footer>© <span id="year"></span> Manuel Martín Martín</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  /* Dropdown elements */
+  const projectsBtn = document.getElementById('projects-btn');
+  const projectsDropdown = document.getElementById('projects-dropdown');
+  const langBtn = document.getElementById('lang-btn');
+  const langDropdown = document.getElementById('lang-dropdown');
+
+  /* Menu móvil */
+  const menuToggle = document.getElementById('menu-toggle');
+  const nav = document.querySelector('nav');
+  const header = document.querySelector('header');
+
+  // Toggle menú móvil
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    nav.classList.toggle('show');
+    // ocultar dropdowns si abrimos/cerramos menú para evitar superposiciones
+    projectsDropdown.classList.remove('show');
+    langDropdown.classList.remove('show');
+  });
+
+  // Función que cierra todos los dropdowns
+  function closeDropdowns() {
+    projectsDropdown.classList.remove('show');
+    projectsBtn.setAttribute('aria-expanded','false');
+    langDropdown.classList.remove('show');
+    langBtn.setAttribute('aria-expanded','false');
+  }
+
+  /* Toggle dropdowns — usamos clases .show (misma aproximación que skills.html) */
+  projectsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = projectsDropdown.classList.contains('show');
+    closeDropdowns();
+    if (!isOpen) {
+      projectsDropdown.classList.add('show');
+      projectsBtn.setAttribute('aria-expanded','true');
+      // posicionamiento adicional: asegurar que el dropdown no quede fuera de pantalla en móvil
+      ensureDropdownInViewport(projectsDropdown, projectsBtn);
+    }
+  });
+
+  langBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = langDropdown.classList.contains('show');
+    closeDropdowns();
+    if (!isOpen) {
+      langDropdown.classList.add('show');
+      langBtn.setAttribute('aria-expanded','true');
+      ensureDropdownInViewport(langDropdown, langBtn);
+    }
+  });
+
+  // Cerrar al hacer clic fuera
+  document.addEventListener('click', (e) => {
+    if (!header.contains(e.target)) {
+      // si se hace click fuera del header, cerramos nav y dropdowns
+      nav.classList.remove('show');
+    }
+    closeDropdowns();
+  });
+
+  // Evitar que el click dentro del nav cierre los dropdowns por el document listener
+  nav.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  // Asegurar que el dropdown esté visible en pantalla (si el botón está cerca del borde)
+  function ensureDropdownInViewport(dropdownEl, buttonEl) {
+    // calculamos bbox y ajustamos right/left si hace falta
+    // (esto es un ajuste simple: si el dropdown se sale por la derecha, lo movemos hacia la izquierda)
+    requestAnimationFrame(() => {
+      const ddRect = dropdownEl.getBoundingClientRect();
+      const viewportW = window.innerWidth || document.documentElement.clientWidth;
+      if (ddRect.right > viewportW - 8) {
+        // desborda a la derecha -> alineamos a la izquierda del botón
+        dropdownEl.style.right = 'auto';
+        dropdownEl.style.left = (buttonEl.getBoundingClientRect().left) + 'px';
+      } else {
+        // revertir a la alineación por defecto (derecha)
+        dropdownEl.style.left = 'auto';
+        dropdownEl.style.right = '0';
+      }
+    });
+  }
+
+  /* Traducción */
+  const texts = {
+    es:{
+      navAbout:"Sobre mí",
+      projectsBtn:"Proyectos ▾",
+      dropdownAll: "Ver todos",
+      navSkills: "Habilidades",
+      langBtn:"🌐 Idioma ▾",
+      aboutTitle:"Bienvendio a mi web :D",
+      aboutText:"Soy Manuel Martín diseñador de videojuegos con un Máster en Diseño de Videojuegos. Tengo experiencia trabajando con Unreal Engine, Unity y Godot, y una sólida base en programación. He participado en numerosos proyectos personales y game jams, varios de los cuales han sido premiados.",
+      cvLink:"📄 Descargar mi CV",
+      projectsTitle:"Salón de la fama",
+      underpacked:"Co-op local donde gestionas una nave y envías paquetes mientras te defiendes.",
+      goofyathlon:"Compite en disparatadas pruebas atléticas moviendote usando el móvil como controlador.",
+      bubblegum:"Enfréntate a tus amigos en varios mini juegos para ver quién se hace con la victoria.",
+      aftermathFellows:"Lidera a un grupo de ayudantes mientras rescatan supervivientes, reparan daños y avanzan por zonas devastadas. Manténlos a salvo y completa objetivos para devolver la esperanza.",
+      whoareyouagain:"Conoce la hitoria de un padre a traves de sus recuerdos",
+      contactTitle:"Contáctame vía:",
+      viewAll: "Ver todos"
+    },
+    en:{
+      navAbout:"About Me",
+      projectsBtn:"Projects ▾",
+      dropdownAll: "View All",
+      navSkills: "Skills",
+      langBtn:"🌐 Language ▾",
+      aboutTitle:"Welcome to my website :D",
+      aboutText:"I’m Manuel Martín, a game designer with a Master’s degree in Game Design. I have experience working with Unreal Engine, Unity, and Godot, and a strong background in programming. I’ve participated in numerous personal and game jam projects, several of which have won awards.",
+      cvLink:"📄 Download my CV",
+      projectsTitle:"Hall of fame",
+      underpacked:"Local co-op game where you manage a spaceship and send packages while defending yourself.",
+      goofyathlon:"Compete in wacky athletic challenges using your phone as a controller.",
+      bubblegum:"Face off against your friends in several mini-games to see who takes the victory.",
+      aftermathFellows:"Lead a team of helpers as they rescue survivors, repair damage, and move through disaster zones. Keep them safe and complete objectives to restore hope.",
+      whoareyouagain:"Discover the story of a father through their memories.",
+      contactTitle:"Contact me via:",
+      viewAll: "View all"
+    }
+  };
+
+  document.querySelectorAll('#lang-dropdown button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const lang=btn.dataset.lang;
+      localStorage.setItem('selectedLang', lang);
+      applyLanguage(lang);
+      closeDropdowns();
+    });
+  });
+
+  function applyLanguage(lang){
+    const t=texts[lang]||texts.es;
+    if(document.getElementById('nav-about')) document.getElementById('nav-about').textContent=t.navAbout;
+    if(document.getElementById('nav-skills')) document.getElementById('nav-skills').textContent=t.navSkills;
+    if(document.getElementById('projects-btn')) document.getElementById('projects-btn').textContent=t.projectsBtn;
+    if(document.getElementById('view-all-btn')) document.getElementById('view-all-btn').textContent = t.viewAll;
+    document.getElementById('dropdown-all').textContent = t.dropdownAll;
+    document.getElementById('lang-btn').textContent=t.langBtn;
+    if(document.getElementById('cv-link')) document.getElementById('cv-link').textContent=t.cvLink;
+    if(document.getElementById('about-title')) document.getElementById('about-title').textContent=t.aboutTitle;
+    if(document.getElementById('about-text')) document.getElementById('about-text').textContent=t.aboutText;
+    if(document.getElementById('projects-title')) document.getElementById('projects-title').textContent=t.projectsTitle;
+    if(document.getElementById('desc-underpacked')) document.getElementById('desc-underpacked').textContent=t.underpacked;
+    if(document.getElementById('desc-goofyathlon')) document.getElementById('desc-goofyathlon').textContent=t.goofyathlon;
+    if(document.getElementById('desc-bubblegum'))document.getElementById('desc-bubblegum').textContent=t.bubblegum;
+    if(document.getElementById('desc-aftermathFellows'))document.getElementById('desc-aftermathFellows').textContent=t.aftermathFellows;
+    if(document.getElementById('desc-whoareyouagain'))document.getElementById('desc-whoareyouagain').textContent=t.whoareyouagain;
+    if(document.getElementById('contact-title'))document.getElementById('contact-title').textContent=t.contactTitle;
+  }
+
+  const savedLang = localStorage.getItem('selectedLang') || 'es';
+  applyLanguage(savedLang);
+});
+/* Copiar correo y mostrar mensaje */
+const emailBtn = document.getElementById('copy-email-btn');
+const emailText = document.getElementById('email-text');
+const copyMessage = document.getElementById('copy-message');
+
+emailBtn.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(emailText.textContent.trim());
+
+    // Detectar idioma guardado
+    const lang = localStorage.getItem('selectedLang') || 'es';
+    const messages = {
+      es: "Correo copiado al portapapeles 📋",
+      en: "Email copied to clipboard 📋"
+    };
+
+    copyMessage.textContent = messages[lang];
+    copyMessage.classList.add('show');
+
+    setTimeout(() => {
+      copyMessage.classList.remove('show');
+    }, 2000);
+  } catch (err) {
+    console.error('Error al copiar el correo: ', err);
+  }
+});
+
+// Cerrar menú al hacer clic fuera o en un enlace (se deja para accesibilidad)
+document.addEventListener('click', (e) => {
+  const header = document.querySelector('header');
+  const nav = document.querySelector('nav');
+  if (!header.contains(e.target)) {
+    nav.classList.remove('show');
+  }
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+</script>
+</body>
+</html>
