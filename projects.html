@@ -150,7 +150,8 @@ h2{text-align:center;margin-bottom:24px;color:var(--accent);font-size:3rem;}
   transition:transform var(--transition), box-shadow var(--transition);
   display:flex;
   flex-direction:column;
-  height:380px;
+  min-height:380px;
+  height:auto;
 }
 .project-card:hover{
   transform:translateY(-6px);
@@ -453,5 +454,6 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 </body>
 </html>
+
 
 
