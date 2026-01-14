@@ -6,13 +6,15 @@
 <title>Portfolio - Marta Crespo Jornet</title> 
 <style>
 :root{
-  --bg:#393E4D;
-  --header-bg:#17191E;
-  --panel:#17191E;
-  --accent:#00bfff;
-  --text:#f3f4f6;
+--bg:#1B1E24;          
+  --header-bg:#17191e;   
+  --panel:#232730;       
+  --accent:#F29F05;      
+  --text:#F3F4F6;        
   --radius:14px;
   --transition:0.3s ease;
+  --muted:#C9CED6;       
+  --danger:#E24B4B;
 }
 
 /* reset */
@@ -187,7 +189,7 @@ section {
   transition:background var(--transition),transform var(--transition);
   text-decoration:none;
 }
-.cv-button:hover{background:#0090cc;transform:translateY(-2px);}
+.cv-button:hover{background:#c98304;transform:translateY(-2px);}
 
 .about-text .cv-button {
   margin-top: 24px;
@@ -287,22 +289,22 @@ section p{line-height:1.6;margin-bottom:20px;text-align:left; font-size: 1.4rem;
 }
 
 .tag{
-  background:rgba(0,191,255,0.15);
-  border:1px solid rgba(0,191,255,0.3);
-  color:var(--accent);
-  font-size:0.75rem;
-  padding:3px 8px;
-  border-radius:8px;
-  backdrop-filter:blur(4px);
+  background: rgba(242,159,5,0.14);
+  border: 1px solid rgba(242,159,5,0.35);
+  color: var(--accent);
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
   pointer-events:auto;
 }
 
 .tag-yellow{
-  background:rgba(255,215,0,0.25);
-  color: #FFD700;
+  background: rgba(226,75,75,0.18);
+  color: #FFB3B3;
+  border: 1px solid rgba(226,75,75,0.55);
   font-weight: 600;
-  border: 1px solid rgba(255,215,0,0.3);
-  box-shadow: 0 0 6px rgba(255,215,0,0.4);
+  box-shadow: 0 0 6px rgba(226,75,75,0.35);
   backdrop-filter: blur(4px);
 }
 
@@ -325,7 +327,7 @@ section p{line-height:1.6;margin-bottom:20px;text-align:left; font-size: 1.4rem;
 }
 
 .view-all-button:hover {
-  background: #0090cc;
+  background: #c98304;
   transform: translateY(-2px);
 }
 
@@ -899,6 +901,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
+
 
 
 
