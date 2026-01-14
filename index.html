@@ -138,14 +138,13 @@ nav{display:flex;align-items:center;gap:18px;position:relative}
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  overflow: visible;       /* IMPORTANTE */
-  background: none;
-  transition: transform 0.25s ease;
+  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
 .social-icons a:hover {
-  background: none;
-  box-shadow: none;
+  background: var(--accent);
   transform: scale(1.1);
 }
 
@@ -153,9 +152,7 @@ nav{display:flex;align-items:center;gap:18px;position:relative}
   width: 30px;
   height: 30px;
   filter: brightness(0) invert(1); /* los pone blancos sobre fondo oscuro */
-  transition: transform 0.25s ease, filter 0.25s ease, drop-shadow 0.25s ease;
-  filter: brightness(0) saturate(100%) invert(64%) sepia(78%) saturate(1140%) hue-rotate(2deg) brightness(101%) contrast(103%);
-  filter: drop-shadow(0 0 10px rgba(242,159,5,0.7));
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 section {
@@ -904,6 +901,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
+
 
 
 
