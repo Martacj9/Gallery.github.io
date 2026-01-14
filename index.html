@@ -140,11 +140,12 @@ nav{display:flex;align-items:center;gap:18px;position:relative}
   border-radius: 50%;
   overflow: hidden;
   background: rgba(255,255,255,0.05);
-  transition: transform 0.25s ease, background 0.25s ease;
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .social-icons a:hover {
-  background: var(--accent);
+  background: rgba(242, 159, 5, 0.18);
+  box-shadow: 0 0 14px rgba(242, 159, 5, 0.45);
   transform: scale(1.1);
 }
 
@@ -901,6 +902,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
+
 
 
 
