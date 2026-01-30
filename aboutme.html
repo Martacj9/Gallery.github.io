@@ -67,8 +67,12 @@ nav{display:flex;align-items:center;gap:18px}
   overflow:hidden;background:rgba(255,255,255,0.05);
   transition:transform 0.25s ease,background 0.25s ease;
 }
-.social-icons a:hover{background:var(--accent);transform:scale(1.1);}
+.social-icons a:hover{background:rgba(255,255,255,0.05); /* mantiene fondo oscuro */
+  transform:scale(1.1);}
 .social-icons img{width:30px;height:30px;filter:brightness(0) invert(1);}
+.social-icons a:hover img{
+  filter: brightness(0) saturate(100%) invert(64%) sepia(78%) 
+          saturate(1140%) hue-rotate(2deg) brightness(101%) contrast(103%);}
 
 /* Links y botones */
 .nav-item{position:relative}
@@ -628,6 +632,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 </body>
 </html>
+
 
 
 
