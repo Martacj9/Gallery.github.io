@@ -378,6 +378,66 @@ hr{border:0;height:1px;background:rgba(255,255,255,0.1);margin:40px 0;}
   }
 }
 
+/* ==== AÑADIDO: nueva distribución About (solo layout) ==== */
+.about-hero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom: 28px;
+}
+.about-hero .about-image{
+  flex: 0 0 34%;
+  max-width: 34%;
+}
+.about-hero .about-text{
+  flex: 0 0 62%;
+  max-width: 62%;
+}
+
+.about-panel{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  width:100%;
+  padding: 26px;
+  border-radius: var(--radius);
+  background: rgba(0,0,0,0.62); /* más opaco / tintado a negro */
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.about-panel .about-text{
+  flex: 1 1 auto;
+  max-width: 70%;
+}
+.about-panel .about-image{
+  flex: 0 0 28%;
+  max-width: 28%;
+}
+
+@media (max-width: 768px){
+  .about-hero{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .about-hero .about-image,
+  .about-hero .about-text{
+    max-width:100%;
+    flex: 0 0 auto;
+  }
+
+  .about-panel{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .about-panel .about-text,
+  .about-panel .about-image{
+    max-width:100%;
+    flex: 0 0 auto;
+  }
+}
+/* ==== FIN AÑADIDO ==== */
+
 
 /* footer */
 footer{text-align:center;font-size:0.9rem;opacity:0.7;padding:28px 0;border-top:1px solid rgba(255,255,255,0.04)}
@@ -436,52 +496,27 @@ footer{text-align:center;font-size:0.9rem;opacity:0.7;padding:28px 0;border-top:
 <main>
   <section id="about">
     <h2 id="about-title">Sobre mí</h2>
-    <div class="about-row">
-        <div class="about-text">
-            <p id="section1">
-            Holaaa desde que era pequeño he estado rodeado de videojuegos, ya sea en la nintendo DS con los Pokémon o en pc con los Metal Slug.
-            Eso me llevó a hacer durante las clases de informática, mis primer juego en ascii, una copia del Snake. Después de eso di el salto a Unity 
-            donde comencé a tomármelo más en serio, desde entonces no he parado de crear juegos ya sea en Unity, Unreal o Godot. Y después 
-            de ver a la gente divertirse con las cosas que hago me reafirma que este es el sitio en el que quiero estar.
-            </p>
-        </div>
-        <div class="about-image">
-            <img src="img/Guarrilla.png" alt="Guerrilla">
-        </div>
+
+    <!-- NUEVA FILA TOP (imagen izq + texto dcha) -->
+    <div class="about-hero">
+      <div class="about-image">
+        <img src="img/Guarrilla.png" alt="Guerrilla">
+      </div>
+
+      <div class="about-text">
+        <p id="section1"></p>
+        <p id="section2"></p>
+      </div>
     </div>
 
-    <hr>
-    <div class="about-row three-cols">
-        <div class="about-image">
-            <img src="img/GameJam.png" alt="GameJam">
-        </div>
-        <div class="about-text">
-            <p id="section2">
-                Por si no lo has notado este mundo me apasiona y siempre estoy trasteando con algo. Ya sea siguiendo un tutorial de como hacer 
-                un shader, o aprendiendo como mejorar en el ámbito de la programación, o simplemente dándole forma a ideas de juegos para hacer. 
-                Me encanta muchísimo el proceso creativo y técnico que hay detras de hacer videojuegos.
-            </p>
-        </div>
-        <div class="about-image">
-            <img src="img/ElJap.png" alt="ElJap">
-        </div>
-    </div>
-    
-    <hr>
-    <div class="about-row">
-        <div class="about-text">
-            <p id="section3">
-                Y ya fuera del ámbito del desarrollo, me encantan los animales estos son mis gatos:
-            </p>
-            <div class="cats-image">
-                <img src="img/Gatetes.png" alt="Mis gatitos">
-            </div>
-            <p id="section3b">
-                Por si no lo habías 
-                notado también me gusta mucho el anime y por desgracia el lol (🤘🏻😔) y salir a saltar a la comba, o simplemente 
-                hacer deporte para descansar del pc.
-            </p>
-        </div>
+    <!-- NUEVO PANEL ABAJO (recuadro oscuro + imagen pequeña) -->
+    <div class="about-panel">
+      <div class="about-text">
+        <p id="section3"></p>
+      </div>
+      <div class="about-image">
+        <img src="img/ElJap.png" alt="ElJap">
+      </div>
     </div>
 
   </section>
@@ -524,21 +559,12 @@ document.addEventListener("DOMContentLoaded", () => {
         dropdownAll: "Ver todos",
         langBtn: "🌐 Idioma ▾",
         aboutTitle: "Sobre mí",
-        section1: 
-        "Holaaa desde que era pequeño he estado rodeado de videojuegos, ya sea en la Nintendo DS con los Pokémon o en pc con los Metal Slug. \
-        Eso me llevó a hacer durante las clases de informática, mi primer juego en ascii, una copia del Snake. Después de eso di el salto a \
-        Unity donde comencé a tomármelo más en serio, desde entonces no he parado de crear juegos ya sea en Unity, Unreal o Godot. Después de \
-        ver a la gente divertirse con las cosas que hago me reafirma que este es el sitio en el que quiero estar.",
-        section2: 
-        "Por si no lo has notado este mundo me apasiona y siempre estoy trasteando con algo; ya sea siguiendo un tutorial de como hacer un shader, \
-        aprendiendo como mejorar en el ámbito de la programación o simplemente dándole forma a ideas de juegos para hacer. Me encanta muchísimo el \
-        proceso creativo y técnico que hay detrás de hacer videojuegos. \
-        Aunque soy un poco tímido me encanta ir a eventos a conocer a otros desarrolladores o incluso a presentar mis juegos :0.",
+        section1:
+        "Soy Marta Crespo Jornet, desarrolladora de videojuegos. Desde pequeña me han apasionado los videojuegos y con el tiempo pasé de jugarlos a querer crearlos y entender cómo funcionan por dentro. Estudié Creación y Desarrollo de Videojuegos, donde construí una base técnica sólida en programación y participé en proyectos y game jams que marcaron mi forma de pensar, comunicarme y trabajar en equipo.",
+        section2:
+        "Con el desarrollo de juegos empecé a interesarme cada vez más por el proceso completo, no solo la parte técnica, sino también la organización, la toma de decisiones y la manera en la que un proyecto se comunica y conecta con los jugadores. Esto me llevó a profundizar en producción y marketing de videojuegos, áreas que disfruto especialmente por su enfoque creativo y estratégico.",
         section3:
-        "Y ya fuera del ámbito del desarrollo, me encantan los animales estos son mis gatos:",
-        section3b:
-        "También me gusta mucho el anime y, por desgracia... El lol (🤘🏻😔). \
-        También salir a saltar a la comba o simplemente hacer deporte para descansar del pc."
+        "Hoy me muevo con naturalidad entre programación, producción y marketing, adaptándome a las necesidades de cada proyecto y manteniendo siempre una visión global del desarrollo. Fuera del desarrollo, me gusta mantenerme activa practicando deporte, desconectar viendo series y seguir el fútbol."
     },
     en: {
         navHome: "Home",
@@ -547,19 +573,12 @@ document.addEventListener("DOMContentLoaded", () => {
         dropdownAll: "View All",
         langBtn: "🌐 Language ▾",
         aboutTitle: "About Me",
-        section1: 
-        "Heeey! Since I was a kid, I’ve been surrounded by video games. Playing Pokémon on my Nintendo DS or Metal Slug on PC. \
-        That made me create my first game in computer class, a little ASCII version of Snake. After that, I moved to Unity and started \
-        taking it more seriously. Since then, I haven’t stopped making games, using Unity, Unreal, or Godot. Seeing people have fun with \
-        what I make really makes me feel this is where I want to be.",
-        section2: 
-        "In case you haven’t noticed, I’m really passionate about this world and I’m always messing around with something. Whether it’s \
-        following a tutorial on how to make a shader, learning how to get better at programming, or just shaping new video game ideas. I really \
-        love the creative and technical process behind making video games. Even though I’m a bit shy, I love going to events to meet other developers or even show my own games :0.",
+        section1:
+        "I’m Marta Crespo Jornet, a video game developer. I’ve loved video games since I was a kid, and over time I went from playing them to wanting to create them and understand how they work behind the scenes. I studied Game Design and Development, where I built a strong technical foundation in programming and took part in projects and game jams that shaped the way I think, collaborate, and approach development.",
+        section2:
+        "As I kept developing games, I became increasingly interested in the full process, not only the technical side but also organization, decision-making, and how projects communicate and connect with players. This led me to explore production and video game marketing, areas where I enjoy combining technical knowledge with creative and strategic thinking.",
         section3:
-        "And outside of game development, I really love animals. These are my cats:",
-        section3b:
-        "I also really like anime and, sadly... League of Legends (🤘🏻😔). I also enjoy jumping rope or just doing some sports to take a break from the PC."
+        "Today I’m comfortable moving between programming, production, and marketing depending on the needs of each project, always keeping a global view of development. Outside of game dev, I enjoy staying active, watching series, and following football."
     }
   };
 
@@ -575,7 +594,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('section1').textContent = t.section1;
     document.getElementById('section2').textContent = t.section2;
     document.getElementById('section3').textContent = t.section3;
-    document.getElementById('section3b').textContent = t.section3b;
   }
 
   const savedLang = localStorage.getItem('selectedLang') || 'es';
@@ -610,4 +628,6 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 </body>
 </html>
+
+
 
