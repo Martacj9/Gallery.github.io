@@ -111,14 +111,15 @@ nav{display:flex;align-items:center;gap:18px;position:relative}
 }
 
 .about-image {
-  flex: 1 1 45%;
+  flex: 0 0 auto;
   display: flex;
   justify-content: center;
+ 
 }
 
 .about-image img {
-  width: 100%;
-  max-width: 420px;
+  width: 380%;
+  max-width: 380px;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.45);
   object-fit: cover;
@@ -514,7 +515,8 @@ section p{line-height:1.6;margin-bottom:20px;text-align:left; font-size: 1.4rem;
     }
 
     .about-image img {
-      max-width: 300px;
+      width: 280px;
+      height: 280px;
     }
   }
 }
@@ -902,6 +904,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
+
 
 
 
