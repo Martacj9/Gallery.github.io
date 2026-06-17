@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Proyecto - Marta Crespo Jornet</title>
+<style>
+:root{
+  --bg:#1B1E24;
+  --header-bg:#17191e;
+  --panel:#232730;
+  --accent:#F29F05;
+  --text:#F3F4F6;
+  --muted:#C9CED6;
+  --radius:14px;
+  --transition:0.3s ease;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-top:80px;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:url('img/FondoWebGris.jpeg');
+  background-repeat:repeat;
+  opacity:0.2;
+  z-index:-1;
+}
+
+header{
+  position:fixed;
+  top:0;left:0;width:100%;
+  background:var(--header-bg);
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 36px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.6);
+  z-index:1000;
+}
+header h1{font-size:1.6rem;color:var(--accent);font-weight:600}
+.header-left{display:flex;align-items:center;gap:12px}
+nav{display:flex;align-items:center;gap:18px}
+.social-icons{display:flex;align-items:center;gap:10px}
+.social-icons a{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  overflow:hidden;background:rgba(255,255,255,0.05);
+  transition:transform .25s ease, background .25s ease, filter .25s ease;
+}
+.social-icons a:hover{
+  background:rgba(255,255,255,0.05);
+  transform:scale(1.1);
+  filter:brightness(0) saturate(100%) invert(64%) sepia(78%) saturate(1140%) hue-rotate(2deg) brightness(101%) contrast(103%);
+}
+.social-icons img{width:30px;height:30px;filter:brightness(0) invert(1)}
+.nav-link{
+  background:none;border:0;color:var(--muted);font:inherit;
+  cursor:pointer;padding:8px 12px;border-radius:10px;
+  transition:background var(--transition),color var(--transition);
+  text-decoration:none;
+}
+.nav-link:hover,.nav-link.active{background:var(--accent);color:#fff}
+.cv-button,.external-button{
+  background:var(--accent);color:#fff;border:none;font-weight:600;
+  padding:8px 14px;border-radius:10px;cursor:pointer;
+  transition:background var(--transition),transform var(--transition);
+  text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+}
+.cv-button:hover,.external-button:hover{background:#c98304;transform:translateY(-2px)}
+.menu-toggle{display:none;background:none;border:0;color:var(--accent);font-size:2rem;cursor:pointer}
+
+main{
+  width:100%;
+  max-width:1160px;
+  margin:0 auto;
+  padding:34px 22px 58px;
+}
+.back-link{
+  color:var(--muted);
+  text-decoration:none;
+  display:inline-flex;
+  margin-bottom:18px;
+  padding:8px 0;
+}
+.back-link:hover{color:var(--accent)}
+.project-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);
+  gap:28px;
+  align-items:center;
+  margin-bottom:36px;
+}
+.hero-media{
+  background:#0f1115;
+  border-radius:var(--radius);
+  overflow:hidden;
+  min-height:320px;
+  box-shadow:0 12px 34px rgba(0,0,0,.45);
+}
+.hero-media img{
+  width:100%;
+  height:100%;
+  min-height:320px;
+  object-fit:cover;
+  display:block;
+}
+.hero-copy h2{
+  color:var(--accent);
+  font-size:clamp(2rem,5vw,4.2rem);
+  line-height:1.02;
+  margin-bottom:14px;
+}
+.hero-copy p{
+  color:var(--text);
+  font-size:1.08rem;
+  line-height:1.7;
+  opacity:.92;
+  margin-bottom:18px;
+}
+.project-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.tag{
+  background:rgba(242,159,5,.14);
+  border:1px solid rgba(242,159,5,.35);
+  color:var(--accent);
+  font-size:.86rem;
+  padding:5px 9px;
+  border-radius:8px;
+}
+.external-actions{display:flex;flex-wrap:wrap;gap:10px}
+
+.media-section{
+  display:grid;
+  grid-template-columns:56px minmax(0,1fr) 56px;
+  gap:18px;
+  align-items:center;
+  margin:22px 0 34px;
+}
+.media-frame{
+  background:#0f1115;
+  border-radius:var(--radius);
+  min-height:420px;
+  overflow:hidden;
+  box-shadow:0 10px 28px rgba(0,0,0,.4);
+}
+.media-frame img,.media-frame iframe{
+  width:100%;
+  height:420px;
+  display:block;
+  border:0;
+  object-fit:cover;
+}
+.media-button{
+  width:56px;height:56px;border:0;border-radius:50%;
+  color:#fff;background:rgba(255,255,255,.16);
+  font-size:2rem;cursor:pointer;
+  transition:background var(--transition), transform var(--transition);
+}
+.media-button:hover{background:var(--accent);transform:scale(1.05)}
+.media-dots{display:flex;justify-content:center;gap:8px;margin-top:14px}
+.media-dots button{
+  width:9px;height:9px;border:0;border-radius:50%;
+  background:rgba(255,255,255,.28);cursor:pointer;
+}
+.media-dots button.active{background:var(--accent)}
+
+.content-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(260px,.35fr);
+  gap:30px;
+  align-items:start;
+}
+.text-panel,.info-panel{
+  background:var(--panel);
+  border-radius:var(--radius);
+  padding:26px;
+  box-shadow:0 8px 22px rgba(0,0,0,.35);
+}
+.text-panel h3,.info-panel h3{
+  color:var(--accent);
+  font-size:1.45rem;
+  margin-bottom:16px;
+}
+.text-panel p{
+  line-height:1.75;
+  color:var(--text);
+  opacity:.92;
+  margin-bottom:16px;
+}
+.contributions{
+  list-style:none;
+  display:grid;
+  gap:12px;
+}
+.contributions li{
+  line-height:1.6;
+  padding-left:18px;
+  position:relative;
+}
+.contributions li::before{
+  content:"";
+  position:absolute;
+  left:0;top:.72em;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--accent);
+}
+.info-list{display:grid;gap:12px}
+.info-list div{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding-bottom:10px;
+}
+.info-list dt{color:var(--muted)}
+.info-list dd{text-align:right;color:var(--text);font-weight:600}
+footer{text-align:center;font-size:.9rem;opacity:.7;padding:28px 0;border-top:1px solid rgba(255,255,255,.04)}
+
+@media (max-width:900px){
+  .project-hero,.content-grid{grid-template-columns:1fr}
+  .media-section{grid-template-columns:44px minmax(0,1fr) 44px;gap:10px}
+  .media-button{width:44px;height:44px;font-size:1.6rem}
+}
+@media (max-width:768px){
+  header{flex-wrap:wrap;padding:14px 20px}
+  nav{display:none;flex-direction:column;width:100%;background:var(--header-bg);border-top:1px solid rgba(255,255,255,.1);padding-top:10px}
+  nav.show{display:flex}
+  .menu-toggle{display:block}
+  .nav-link,.cv-button{width:100%;text-align:center}
+  main{padding:28px 16px 48px}
+  .hero-media,.hero-media img{min-height:230px}
+  .media-frame{min-height:260px}
+  .media-frame img,.media-frame iframe{height:260px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <h1>Marta Crespo</h1>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/marta-crespo-jornet-432107304" target="_blank" rel="noopener"><img src="img/linkedinLogo.png" alt="LinkedIn"></a>
+      <a href="https://martacj9.itch.io" target="_blank" rel="noopener"><img src="img/itchioLogo.png" alt="Itch.io"></a>
+    </div>
+  </div>
+  <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">&#9776;</button>
+  <nav>
+    <a id="nav-home" href="index.html" class="nav-link">Inicio</a>
+    <a id="nav-about" href="aboutme.html" class="nav-link">Sobre mi</a>
+    <a id="nav-skills" href="skills.html" class="nav-link">Habilidades</a>
+    <a id="nav-projects" href="projects.html" class="nav-link active">Proyectos</a>
+    <a href="files/CV-Marta Crespo Jornet_(ENG).pdf" download class="cv-button">CV</a>
+  </nav>
+</header>
+
+<main>
+  <a id="back-link" class="back-link" href="projects.html">&larr; Volver a proyectos</a>
+
+  <section class="project-hero">
+    <div class="hero-media">
+      <img id="hero-image" src="img/PortadaUnderpacked.jpeg" alt="">
+    </div>
+    <div class="hero-copy">
+      <h2 id="project-title">Underpacked</h2>
+      <p id="project-summary"></p>
+      <div id="project-tags" class="project-tags"></div>
+      <div id="external-actions" class="external-actions"></div>
+    </div>
+  </section>
+
+  <section aria-label="Galeria del proyecto">
+    <div class="media-section">
+      <button id="prev-media" class="media-button" aria-label="Anterior">&#8249;</button>
+      <div>
+        <div id="media-frame" class="media-frame"></div>
+        <div id="media-dots" class="media-dots"></div>
+      </div>
+      <button id="next-media" class="media-button" aria-label="Siguiente">&#8250;</button>
+    </div>
+  </section>
+
+  <section class="content-grid">
+    <article class="text-panel">
+      <h3 id="about-heading">Sobre el proyecto</h3>
+      <div id="project-description"></div>
+      <h3 id="contribution-heading">Mi contribucion</h3>
+      <ul id="project-contributions" class="contributions"></ul>
+    </article>
+    <aside class="info-panel">
+      <h3 id="details-heading">Detalles</h3>
+      <dl id="project-details" class="info-list"></dl>
+    </aside>
+  </section>
+</main>
+
+<footer>&copy; <span id="year"></span> Marta Crespo Jornet</footer>
+
+<script>
+const projects = {
+  underpacked: {
+    title: "Underpacked",
+    cover: "img/PortadaUnderpacked.jpeg",
+    summary: {
+      es: "Co-op local donde gestionas una nave espacial, entregas paquetes y sobrevives a amenazas mientras coordinas tareas bajo presion.",
+      en: "Local co-op where you manage a spaceship, deliver packages and survive threats while coordinating under pressure."
+    },
+    description: {
+      es: [
+        "Underpacked es un proyecto cooperativo de gestion y estrategia desarrollado en Unreal Engine 5. La partida se centra en la comunicacion entre jugadores: moverse por la nave, preparar entregas, controlar sistemas y reaccionar a emergencias.",
+        "La pagina esta pensada para ense&ntilde;ar el proyecto desde dentro del porfolio: primero una pieza visual grande, despues el carrusel de capturas o video, y finalmente contexto sobre el desarrollo y las responsabilidades."
+      ],
+      en: [
+        "Underpacked is a cooperative management and strategy project developed in Unreal Engine 5. The game focuses on communication between players: moving through the ship, preparing deliveries, controlling systems and reacting to emergencies.",
+        "This page is designed to present the project inside the portfolio: a strong visual first, then a carousel for screenshots or video, and finally context about development and responsibilities."
+      ]
+    },
+    contributions: {
+      es: ["Movimiento del jugador y sistema basico de respawn.", "Game managers para niveles, seleccion de jugadores y persistencia entre escenas.", "Gestion de sistemas de nave y bloqueo cuando el combustible se agota.", "Apoyo en produccion, coordinacion y comunicacion del proyecto."],
+      en: ["Player movement and basic respawn system.", "Game managers for levels, player selection and persistence between scenes.", "Ship system management and blocking logic when fuel runs out.", "Support in production, coordination and project communication."]
+    },
+    tags: ["Unreal Engine 5", "Local Co-op", "Strategy", "In progress"],
+    details: { engine: "Unreal Engine 5", role: "Gameplay / UI / Production", status: "In progress", platform: "Steam" },
+    actions: [{ label: "Steam", url: "https://store.steampowered.com/app/3587480/Underpacked/" }],
+    media: [{ type: "image", src: "img/PortadaUnderpacked.jpeg", alt: "Underpacked" }]
+  },
+  mask: {
+    title: "M.A.S.K Mucha Lucha",
+    cover: "img/Portada_M.A.S.K.png",
+    summary: { es: "Brawler tactico de lucha libre con partidas rapidas, accion PvP y PvE.", en: "A wrestling-inspired tactical brawler with fast PvP and PvE matches." },
+    description: {
+      es: ["M.A.S.K Mucha Lucha combina combate, estrategia y tono arcade en un proyecto de game jam.", "El formato de detalle permite destacar tanto la idea jugable como las decisiones de dise&ntilde;o y produccion."],
+      en: ["M.A.S.K Mucha Lucha combines combat, strategy and an arcade tone in a game jam project.", "The detail format highlights both the gameplay idea and the design and production decisions."]
+    },
+    contributions: { es: ["Implementacion de mecanicas jugables.", "Apoyo en integracion y balance de partida.", "Trabajo colaborativo en alcance y cierre de la jam."], en: ["Gameplay mechanics implementation.", "Support on integration and match balance.", "Collaborative work on scope and jam delivery."] },
+    tags: ["Game Jam", "Unity", "Tactic RPG", "PvP", "PvE"],
+    details: { engine: "Unity", role: "Gameplay developer", status: "Published", platform: "Itch.io" },
+    actions: [{ label: "Itch.io", url: "https://drunkenduckco.itch.io/mask-mucha-lucha" }],
+    media: [{ type: "image", src: "img/Portada_M.A.S.K.png", alt: "M.A.S.K Mucha Lucha" }]
+  },
+  eyesonyuki: {
+    title: "Eyes on Yuki",
+    cover: "img/PortadaEoY.png",
+    summary: { es: "Tower defense cooperativo donde proteges santuarios y ayudas a Yuki frente a oleadas de enemigos.", en: "A co-op tower defense where you protect shrines and help Yuki against enemy waves." },
+    description: {
+      es: ["Eyes on Yuki es un proyecto cooperativo centrado en defensa, gestion de amenazas y lectura del espacio.", "La ficha interna deja espacio para capturas de gameplay, trailers y explicacion de sistemas."],
+      en: ["Eyes on Yuki is a cooperative project focused on defense, threat management and spatial awareness.", "The internal page leaves room for gameplay captures, trailers and system explanations."]
+    },
+    contributions: { es: ["Apoyo en desarrollo de sistemas jugables.", "Trabajo en iteracion y pulido de experiencia.", "Colaboracion en tareas de equipo durante produccion."], en: ["Support on gameplay systems.", "Iteration and polish work.", "Team collaboration during production."] },
+    tags: ["Unreal Engine 5", "Tower Defense", "Local Co-op"],
+    details: { engine: "Unreal Engine 5", role: "Game developer", status: "Published", platform: "Steam" },
+    actions: [{ label: "Steam", url: "https://store.steampowered.com/app/3281600/Eyes_on_Yuki/" }],
+    media: [{ type: "image", src: "img/PortadaEoY.png", alt: "Eyes on Yuki" }]
+  },
+  mathiatic: {
+    title: "Mathiatic",
+    cover: "img/PortadaMathiatic.png",
+    summary: { es: "Arcade educativo 2D sobre raices cuadradas, agilidad mental y ritmo de partida.", en: "A 2D educational arcade game about square roots, mental agility and game rhythm." },
+    description: {
+      es: ["Mathiatic nace en game jam con un enfoque educativo y una presentacion arcade directa.", "La estructura de la pagina ayuda a explicar rapidamente la premisa, el aprendizaje y el trabajo realizado."],
+      en: ["Mathiatic was born in a game jam with an educational focus and a direct arcade presentation.", "The page structure helps explain the premise, learning goal and work done."]
+    },
+    contributions: { es: ["Programacion de mecanicas base.", "Integracion de arte y flujo de partida.", "Ajustes de dificultad y ritmo."], en: ["Base mechanics programming.", "Art integration and game flow.", "Difficulty and pacing adjustments."] },
+    tags: ["Game Jam", "Unity", "Educational", "Pixel art"],
+    details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Global Game Jam" },
+    actions: [{ label: "Global Game Jam", url: "https://v3.globalgamejam.org/2023/games/matemagic-6" }],
+    media: [{ type: "image", src: "img/PortadaMathiatic.png", alt: "Mathiatic" }]
+  },
+  burpvoyage: {
+    title: "Burp Voyage",
+    cover: "img/portadaBurpVoyage.png",
+    summary: { es: "Aventura de plataformas protagonizada por Burpy, una burbuja de CO2 que intenta escapar de un sistema digestivo surrealista.", en: "A platform adventure starring Burpy, a CO2 bubble trying to escape a surreal digestive system." },
+    description: {
+      es: ["Burp Voyage mezcla plataformas, tono cozy y una premisa visual muy reconocible.", "La ficha permite mostrar capturas, video y el desglose de sistemas o aportaciones."],
+      en: ["Burp Voyage mixes platforming, a cozy tone and a very recognizable visual premise.", "The page can present screenshots, video and the breakdown of systems or contributions."]
+    },
+    contributions: { es: ["Implementacion de interacciones y flujo de juego.", "Integracion de assets.", "Apoyo en cierre de build para game jam."], en: ["Interaction and game flow implementation.", "Asset integration.", "Build delivery support for the game jam."] },
+    tags: ["Game Jam", "Unity", "Action", "Cozy"],
+    details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Itch.io" },
+    actions: [{ label: "Itch.io", url: "https://fatildb9.itch.io/burp-voyage" }],
+    media: [{ type: "image", src: "img/portadaBurpVoyage.png", alt: "Burp Voyage" }]
+  },
+  dmondvorce: {
+    title: "D-mon D-Vorce",
+    cover: "img/PortadaD-monD-Vorce.jpeg",
+    summary: { es: "Juego competitivo local donde dos demonios compiten para demostrar quien es el mejor padre.", en: "A local competitive game where two demons compete to prove who is the best parent." },
+    description: { es: ["D-mon D-Vorce se apoya en partidas rapidas, humor y competicion local.", "La pagina mantiene el mismo patron visual para documentar el concepto y la contribucion."], en: ["D-mon D-Vorce is built around fast matches, humor and local competition.", "The page keeps the same visual pattern to document the concept and contribution."] },
+    contributions: { es: ["Desarrollo de mecanicas de juego.", "Integracion de reglas competitivas.", "Apoyo en pruebas y ajustes."], en: ["Gameplay mechanics development.", "Competitive rule integration.", "Testing and tuning support."] },
+    tags: ["Game Jam", "Unity", "Local Co-op", "Competitive"],
+    details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Itch.io" },
+    actions: [{ label: "Itch.io", url: "https://fatildb9.itch.io/d-mon-d-vorce" }],
+    media: [{ type: "image", src: "img/PortadaD-monD-Vorce.jpeg", alt: "D-mon D-Vorce" }]
+  },
+  cincodias: {
+    title: "5 Dias",
+    cover: "img/Portada5Dias.jpeg",
+    summary: { es: "Aventura narrativa con tono onirico, un pueblo en construccion y un misterio oculto.", en: "A narrative adventure with a dreamlike tone, a town under construction and a hidden mystery." },
+    description: { es: ["5 Dias combina exploracion, narrativa y atmosfera.", "La ficha deja el protagonismo a la portada y al texto de contexto del proyecto."], en: ["5 Dias combines exploration, narrative and atmosphere.", "The page gives focus to the cover and project context text."] },
+    contributions: { es: ["Apoyo en implementacion jugable.", "Integracion de contenido narrativo.", "Pruebas y ajustes de experiencia."], en: ["Gameplay implementation support.", "Narrative content integration.", "Testing and experience tuning."] },
+    tags: ["Unity", "Single Player", "Adventure"],
+    details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Itch.io" },
+    actions: [{ label: "Itch.io", url: "https://fatildb9.itch.io/5-dias" }],
+    media: [{ type: "image", src: "img/Portada5Dias.jpeg", alt: "5 Dias" }]
+  },
+  workrights: {
+    title: "Works rights, right...?",
+    cover: "img/PortadaWorkRightsRight.jpeg",
+    summary: { es: "Newsgame educativo sobre precariedad laboral y las decisiones detras de la construccion.", en: "An educational newsgame about labor exploitation and the decisions behind construction work." },
+    description: { es: ["Works rights, right...? usa el videojuego para hablar de precariedad laboral desde varias perspectivas.", "La pagina interna permite explicar el tema, la intencion y el papel jugable sin sacar al usuario del porfolio."], en: ["Works rights, right...? uses games to discuss labor exploitation from different perspectives.", "The internal page explains the subject, intention and gameplay role without taking the user out of the portfolio."] },
+    contributions: { es: ["Implementacion de flujo y escenas.", "Integracion de contenido educativo.", "Apoyo en pruebas y presentacion."], en: ["Flow and scene implementation.", "Educational content integration.", "Testing and presentation support."] },
+    tags: ["Unity", "Newsgame", "Educational"],
+    details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Itch.io" },
+    actions: [{ label: "Itch.io", url: "https://cokirmg.itch.io/works-right-right" }],
+    media: [{ type: "image", src: "img/PortadaWorkRightsRight.jpeg", alt: "Works rights, right...?" }]
+  }
+};
+
+let currentMedia = 0;
+const lang = localStorage.getItem("selectedLang") || "es";
+const params = new URLSearchParams(window.location.search);
+const projectKey = params.get("p") || "underpacked";
+const project = projects[projectKey] || projects.underpacked;
+
+function text(value){
+  return typeof value === "string" ? value : (value[lang] || value.es);
+}
+
+function renderProject(){
+  document.title = project.title + " - Marta Crespo Jornet";
+  document.getElementById("project-title").textContent = project.title;
+  document.getElementById("hero-image").src = project.cover;
+  document.getElementById("hero-image").alt = project.title;
+  document.getElementById("project-summary").textContent = text(project.summary);
+  document.getElementById("project-tags").innerHTML = project.tags.map(tag => `<span class="tag">${tag}</span>`).join("");
+  document.getElementById("external-actions").innerHTML = project.actions.map(action => `<a class="external-button" href="${action.url}" target="_blank" rel="noopener">${action.label}</a>`).join("");
+  document.getElementById("project-description").innerHTML = text(project.description).map(paragraph => `<p>${paragraph}</p>`).join("");
+  document.getElementById("project-contributions").innerHTML = text(project.contributions).map(item => `<li>${item}</li>`).join("");
+  document.getElementById("project-details").innerHTML = `
+    <div><dt>Engine</dt><dd>${project.details.engine}</dd></div>
+    <div><dt>Role</dt><dd>${project.details.role}</dd></div>
+    <div><dt>Status</dt><dd>${project.details.status}</dd></div>
+    <div><dt>Platform</dt><dd>${project.details.platform}</dd></div>
+  `;
+  if(lang === "en"){
+    document.getElementById("nav-home").textContent = "Home";
+    document.getElementById("nav-about").textContent = "About me";
+    document.getElementById("nav-skills").textContent = "Skills";
+    document.getElementById("nav-projects").textContent = "Projects";
+    document.getElementById("back-link").textContent = "< Back to projects";
+    document.getElementById("about-heading").textContent = "About the project";
+    document.getElementById("contribution-heading").textContent = "My contribution";
+    document.getElementById("details-heading").textContent = "Details";
+  }
+  renderMedia();
+}
+
+function renderMedia(){
+  const media = project.media[currentMedia];
+  const frame = document.getElementById("media-frame");
+  if(media.type === "video"){
+    frame.innerHTML = `<iframe src="${media.src}" title="${media.title || project.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+  } else {
+    frame.innerHTML = `<img src="${media.src}" alt="${media.alt || project.title}">`;
+  }
+  document.getElementById("media-dots").innerHTML = project.media.map((_, index) => `<button class="${index === currentMedia ? "active" : ""}" aria-label="Ver medio ${index + 1}" data-index="${index}"></button>`).join("");
+  document.querySelectorAll("#media-dots button").forEach(button => {
+    button.addEventListener("click", () => {
+      currentMedia = Number(button.dataset.index);
+      renderMedia();
+    });
+  });
+}
+
+document.getElementById("prev-media").addEventListener("click", () => {
+  currentMedia = (currentMedia - 1 + project.media.length) % project.media.length;
+  renderMedia();
+});
+document.getElementById("next-media").addEventListener("click", () => {
+  currentMedia = (currentMedia + 1) % project.media.length;
+  renderMedia();
+});
+document.getElementById("menu-toggle").addEventListener("click", () => {
+  document.querySelector("nav").classList.toggle("show");
+});
+document.getElementById("year").textContent = new Date().getFullYear();
+renderProject();
+</script>
+</body>
+</html>
