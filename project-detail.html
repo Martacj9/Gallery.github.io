@@ -46,19 +46,16 @@ header{
 }
 header h1{font-size:1.6rem;color:var(--accent);font-weight:600}
 .header-left{display:flex;align-items:center;gap:12px}
+.header-right{display:flex;align-items:center;justify-content:flex-end;gap:10px}
 nav{display:flex;align-items:center;gap:18px}
 .social-icons{display:flex;align-items:center;gap:10px}
 .social-icons a{
   display:inline-flex;align-items:center;justify-content:center;
   width:40px;height:40px;border-radius:50%;
   overflow:hidden;background:rgba(255,255,255,0.05);
-  transition:transform .25s ease, background .25s ease, filter .25s ease;
+  transition:transform .25s ease, background .25s ease;
 }
-.social-icons a:hover{
-  background:rgba(255,255,255,0.05);
-  transform:scale(1.1);
-  filter:brightness(0) saturate(100%) invert(64%) sepia(78%) saturate(1140%) hue-rotate(2deg) brightness(101%) contrast(103%);
-}
+.social-icons a:hover{background:var(--accent);transform:scale(1.1)}
 .social-icons img{width:30px;height:30px;filter:brightness(0) invert(1)}
 .nav-link{
   background:none;border:0;color:var(--muted);font:inherit;
@@ -66,19 +63,52 @@ nav{display:flex;align-items:center;gap:18px}
   transition:background var(--transition),color var(--transition);
   text-decoration:none;
 }
-.nav-link:hover,.nav-link.active{background:var(--accent);color:#fff}
-.cv-button,.external-button{
+.nav-link:hover{background:var(--accent);color:#fff}
+.nav-item{position:relative}
+.dropdown{
+  position:absolute;
+  top:calc(100% + 6px);
+  right:0;
+  background:var(--panel);
+  border-radius:var(--radius);
+  box-shadow:0 8px 22px rgba(0,0,0,.45);
+  display:none;
+  flex-direction:column;
+  min-width:180px;
+  z-index:1001;
+  opacity:0;
+  transform:translateY(-8px);
+  transition:opacity .25s ease, transform .25s ease;
+}
+.dropdown.show{
+  display:flex;
+  opacity:1;
+  transform:translateY(0);
+}
+.dropdown a,.dropdown button{
+  color:var(--text);
+  text-decoration:none;
+  background:none;
+  border:none;
+  text-align:left;
+  padding:10px 14px;
+  cursor:pointer;
+  font:inherit;
+  width:100%;
+}
+.dropdown a:hover,.dropdown button:hover{background:var(--accent);color:#fff}
+.cv-button{
   background:var(--accent);color:#fff;border:none;font-weight:600;
   padding:8px 14px;border-radius:10px;cursor:pointer;
   transition:background var(--transition),transform var(--transition);
   text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;
 }
-.cv-button:hover,.external-button:hover{background:#c98304;transform:translateY(-2px)}
+.cv-button:hover{background:#c98304;transform:translateY(-2px)}
 .menu-toggle{display:none;background:none;border:0;color:var(--accent);font-size:2rem;cursor:pointer}
 
 main{
   width:100%;
-  max-width:1160px;
+  max-width:980px;
   margin:0 auto;
   padding:34px 22px 58px;
 }
@@ -91,40 +121,25 @@ main{
 }
 .back-link:hover{color:var(--accent)}
 .project-hero{
-  display:grid;
-  grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);
-  gap:28px;
-  align-items:center;
-  margin-bottom:36px;
-}
-.hero-media{
-  background:#0f1115;
-  border-radius:var(--radius);
-  overflow:hidden;
-  min-height:320px;
-  box-shadow:0 12px 34px rgba(0,0,0,.45);
-}
-.hero-media img{
-  width:100%;
-  height:100%;
-  min-height:320px;
-  object-fit:cover;
-  display:block;
+  text-align:center;
+  margin-bottom:18px;
 }
 .hero-copy h2{
   color:var(--accent);
-  font-size:clamp(2rem,5vw,4.2rem);
-  line-height:1.02;
-  margin-bottom:14px;
+  font-size:clamp(2rem,5vw,3.3rem);
+  line-height:1.08;
+  margin-bottom:12px;
 }
 .hero-copy p{
   color:var(--text);
   font-size:1.08rem;
   line-height:1.7;
   opacity:.92;
-  margin-bottom:18px;
+  max-width:620px;
+  margin:0 auto 18px;
+  font-style:italic;
 }
-.project-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.project-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:12px auto 22px}
 .tag{
   background:rgba(242,159,5,.14);
   border:1px solid rgba(242,159,5,.35);
@@ -133,25 +148,56 @@ main{
   padding:5px 9px;
   border-radius:8px;
 }
-.external-actions{display:flex;flex-wrap:wrap;gap:10px}
+.external-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:22px 0}
+.external-button{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:#05070a;
+  border:1px solid rgba(255,255,255,.16);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  box-shadow:0 8px 18px rgba(0,0,0,.35);
+  transition:transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+.external-button:hover{
+  background:#000;
+  transform:translateY(-2px) scale(1.05);
+  box-shadow:0 0 18px rgba(242,159,5,.45);
+}
+.external-button img{
+  width:34px;
+  height:34px;
+  display:block;
+  object-fit:contain;
+  filter:brightness(0) invert(1);
+}
+.external-button span{
+  color:#fff;
+  font-weight:700;
+  font-size:.72rem;
+  letter-spacing:0;
+}
 
 .media-section{
   display:grid;
   grid-template-columns:56px minmax(0,1fr) 56px;
   gap:18px;
   align-items:center;
-  margin:22px 0 34px;
+  margin:8px 0 28px;
 }
 .media-frame{
   background:#0f1115;
   border-radius:var(--radius);
-  min-height:420px;
+  min-height:360px;
   overflow:hidden;
   box-shadow:0 10px 28px rgba(0,0,0,.4);
 }
 .media-frame img,.media-frame iframe{
   width:100%;
-  height:420px;
+  height:360px;
   display:block;
   border:0;
   object-fit:cover;
@@ -171,59 +217,58 @@ main{
 .media-dots button.active{background:var(--accent)}
 
 .content-grid{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(260px,.35fr);
-  gap:30px;
-  align-items:start;
+  display:block;
+  max-width:760px;
+  margin:0 auto;
 }
 .text-panel,.info-panel{
-  background:var(--panel);
-  border-radius:var(--radius);
-  padding:26px;
-  box-shadow:0 8px 22px rgba(0,0,0,.35);
+  background:transparent;
+  border-radius:0;
+  padding:10px 0 0;
+  box-shadow:none;
 }
 .text-panel h3,.info-panel h3{
   color:var(--accent);
   font-size:1.45rem;
-  margin-bottom:16px;
+  margin:34px 0 18px;
+  text-align:center;
 }
 .text-panel p{
   line-height:1.75;
   color:var(--text);
   opacity:.92;
   margin-bottom:16px;
+  text-align:left;
 }
 .contributions{
-  list-style:none;
+  list-style:disc;
   display:grid;
-  gap:12px;
+  gap:10px;
+  padding-left:22px;
 }
 .contributions li{
   line-height:1.6;
-  padding-left:18px;
+  padding-left:2px;
   position:relative;
 }
-.contributions li::before{
-  content:"";
-  position:absolute;
-  left:0;top:.72em;
-  width:7px;height:7px;border-radius:50%;
-  background:var(--accent);
+.contributions li::marker{color:var(--accent)}
+.info-panel{margin-top:22px}
+.info-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px;
 }
-.info-list{display:grid;gap:12px}
 .info-list div{
-  display:flex;
-  justify-content:space-between;
-  gap:18px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  padding-bottom:10px;
+  background:var(--panel);
+  border:1px solid rgba(242,159,5,.18);
+  border-radius:10px;
+  padding:12px;
 }
 .info-list dt{color:var(--muted)}
-.info-list dd{text-align:right;color:var(--text);font-weight:600}
+.info-list dd{color:var(--text);font-weight:600;margin-top:4px}
 footer{text-align:center;font-size:.9rem;opacity:.7;padding:28px 0;border-top:1px solid rgba(255,255,255,.04)}
 
 @media (max-width:900px){
-  .project-hero,.content-grid{grid-template-columns:1fr}
   .media-section{grid-template-columns:44px minmax(0,1fr) 44px;gap:10px}
   .media-button{width:44px;height:44px;font-size:1.6rem}
 }
@@ -234,7 +279,6 @@ footer{text-align:center;font-size:.9rem;opacity:.7;padding:28px 0;border-top:1p
   .menu-toggle{display:block}
   .nav-link,.cv-button{width:100%;text-align:center}
   main{padding:28px 16px 48px}
-  .hero-media,.hero-media img{min-height:230px}
   .media-frame{min-height:260px}
   .media-frame img,.media-frame iframe{height:260px}
 }
@@ -249,13 +293,37 @@ footer{text-align:center;font-size:.9rem;opacity:.7;padding:28px 0;border-top:1p
       <a href="https://martacj9.itch.io" target="_blank" rel="noopener"><img src="img/itchioLogo.png" alt="Itch.io"></a>
     </div>
   </div>
-  <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">&#9776;</button>
+  <div class="header-right">
+    <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">&#9776;</button>
+  </div>
   <nav>
-    <a id="nav-home" href="index.html" class="nav-link">Inicio</a>
-    <a id="nav-about" href="aboutme.html" class="nav-link">Sobre mi</a>
-    <a id="nav-skills" href="skills.html" class="nav-link">Habilidades</a>
-    <a id="nav-projects" href="projects.html" class="nav-link active">Proyectos</a>
-    <a href="files/CV-Marta Crespo Jornet_(ENG).pdf" download class="cv-button">CV</a>
+    <div class="nav-item">
+      <a id="nav-about" href="aboutme.html" class="nav-link">Sobre mi</a>
+    </div>
+
+    <div class="nav-item">
+      <a id="nav-skills" href="skills.html" class="nav-link">Habilidades</a>
+    </div>
+
+    <div class="nav-item">
+      <button id="projects-btn" class="nav-link" aria-haspopup="true" aria-expanded="false">Proyectos ▾</button>
+      <div id="projects-dropdown" class="dropdown" aria-hidden="true">
+        <a id="dropdown-all" href="projects.html">Ver todos</a>
+        <a href="project-detail.html?p=underpacked">Underpacked</a>
+        <a href="project-detail.html?p=mask">M.A.S.K Mucha Lucha</a>
+        <a href="project-detail.html?p=eyesonyuki">Eyes on yuki</a>
+        <a href="project-detail.html?p=burpvoyage">Burp Voyage</a>
+        <a href="project-detail.html?p=mathiatic">Mathiatic</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button id="lang-btn" class="nav-link" aria-haspopup="true" aria-expanded="false">🌐 Idioma ▾</button>
+      <div id="lang-dropdown" class="dropdown" aria-hidden="true">
+        <button data-lang="es">Español</button>
+        <button data-lang="en">English</button>
+      </div>
+    </div>
+    <a id="cv-link" href="files/CV-Marta Crespo Jornet_(ENG).pdf" download class="cv-button">📄 CV</a>
   </nav>
 </header>
 
@@ -263,14 +331,8 @@ footer{text-align:center;font-size:.9rem;opacity:.7;padding:28px 0;border-top:1p
   <a id="back-link" class="back-link" href="projects.html">&larr; Volver a proyectos</a>
 
   <section class="project-hero">
-    <div class="hero-media">
-      <img id="hero-image" src="img/PortadaUnderpacked.jpeg" alt="">
-    </div>
     <div class="hero-copy">
       <h2 id="project-title">Underpacked</h2>
-      <p id="project-summary"></p>
-      <div id="project-tags" class="project-tags"></div>
-      <div id="external-actions" class="external-actions"></div>
     </div>
   </section>
 
@@ -282,6 +344,14 @@ footer{text-align:center;font-size:.9rem;opacity:.7;padding:28px 0;border-top:1p
         <div id="media-dots" class="media-dots"></div>
       </div>
       <button id="next-media" class="media-button" aria-label="Siguiente">&#8250;</button>
+    </div>
+  </section>
+
+  <section class="project-hero">
+    <div class="hero-copy">
+      <p id="project-summary"></p>
+      <div id="external-actions" class="external-actions"></div>
+      <div id="project-tags" class="project-tags"></div>
     </div>
   </section>
 
@@ -307,8 +377,8 @@ const projects = {
     title: "Underpacked",
     cover: "img/PortadaUnderpacked.jpeg",
     summary: {
-      es: "Co-op local donde gestionas una nave espacial, entregas paquetes y sobrevives a amenazas mientras coordinas tareas bajo presion.",
-      en: "Local co-op where you manage a spaceship, deliver packages and survive threats while coordinating under pressure."
+      es: "¡Bienvenidos a la mayor empresa de paquetería de la galaxia! Sumérgete solo o con tu camarada en una odisea espacial como repartidor. Esquiva amenazas, sobrevive a la precariedad laboral y entrega paquetes. ¡Demostrad que sois los mejores repartidores del universo!",
+      en: "Welcome to the galaxy's biggest delivery company! Dive into a space odyssey as a delivery crew, alone or with your comrades. Dodge threats, survive the harsh realities of labor exploitation and deliver packages. Prove you're the best employees in the universe!"
     },
     description: {
       es: [
@@ -325,8 +395,11 @@ const projects = {
       en: ["Player movement and basic respawn system.", "Game managers for levels, player selection and persistence between scenes.", "Ship system management and blocking logic when fuel runs out.", "Support in production, coordination and project communication."]
     },
     tags: ["Unreal Engine 5", "Local Co-op", "Strategy", "In progress"],
-    details: { engine: "Unreal Engine 5", role: "Gameplay / UI / Production", status: "In progress", platform: "Steam" },
-    actions: [{ label: "Steam", url: "https://store.steampowered.com/app/3587480/Underpacked/" }],
+    details: { engine: "Unreal Engine 5", role: "Producer / Marketing Manager", status: "In progress", platform: "Steam" },
+    actions: [
+      { label: "Steam", url: "https://store.steampowered.com/app/3587480/Underpacked/", icon: "img/steamLogo.svg" },
+      { label: "Linktree", url: "https://linktr.ee/", icon: "img/linktreeLogo.svg" }
+    ],
     media: [{ type: "image", src: "img/PortadaUnderpacked.jpeg", alt: "Underpacked" }]
   },
   mask: {
@@ -339,22 +412,25 @@ const projects = {
     },
     contributions: { es: ["Implementacion de mecanicas jugables.", "Apoyo en integracion y balance de partida.", "Trabajo colaborativo en alcance y cierre de la jam."], en: ["Gameplay mechanics implementation.", "Support on integration and match balance.", "Collaborative work on scope and jam delivery."] },
     tags: ["Game Jam", "Unity", "Tactic RPG", "PvP", "PvE"],
-    details: { engine: "Unity", role: "Gameplay developer", status: "Published", platform: "Itch.io" },
-    actions: [{ label: "Itch.io", url: "https://drunkenduckco.itch.io/mask-mucha-lucha" }],
+    details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Itch.io" },
+    actions: [{ label: "Itch.io", url: "https://drunkenduckco.itch.io/mask-mucha-lucha", icon: "img/itchioLogo.png" }],
     media: [{ type: "image", src: "img/Portada_M.A.S.K.png", alt: "M.A.S.K Mucha Lucha" }]
   },
   eyesonyuki: {
     title: "Eyes on Yuki",
     cover: "img/PortadaEoY.png",
-    summary: { es: "Tower defense cooperativo donde proteges santuarios y ayudas a Yuki frente a oleadas de enemigos.", en: "A co-op tower defense where you protect shrines and help Yuki against enemy waves." },
+    summary: {
+      es: "¿Es esto un tower defense cooperativo sobre cuidar a una rana con cero instinto de supervivencia? Sí. Así es. Es caótico, es mágico y es ridículamente adorable. ¡Recolectad recursos, construid defensas, proteged las estatuas y cuidad del desastre más adorable del planeta!",
+      en: "Is this a co-op tower defense about babysitting a frog with zero survival instincts? Absolutely. It's chaotic, it's whimsical, and it's adorably ridiculous. Gather resources, build defenses, protect shrines-and babysit the world's cutest disaster in a world that falls apart beautifully."
+    },
     description: {
       es: ["Eyes on Yuki es un proyecto cooperativo centrado en defensa, gestion de amenazas y lectura del espacio.", "La ficha interna deja espacio para capturas de gameplay, trailers y explicacion de sistemas."],
       en: ["Eyes on Yuki is a cooperative project focused on defense, threat management and spatial awareness.", "The internal page leaves room for gameplay captures, trailers and system explanations."]
     },
     contributions: { es: ["Apoyo en desarrollo de sistemas jugables.", "Trabajo en iteracion y pulido de experiencia.", "Colaboracion en tareas de equipo durante produccion."], en: ["Support on gameplay systems.", "Iteration and polish work.", "Team collaboration during production."] },
     tags: ["Unreal Engine 5", "Tower Defense", "Local Co-op"],
-    details: { engine: "Unreal Engine 5", role: "Game developer", status: "Published", platform: "Steam" },
-    actions: [{ label: "Steam", url: "https://store.steampowered.com/app/3281600/Eyes_on_Yuki/" }],
+    details: { engine: "Unreal Engine 5", role: "Marketing Manager", status: "In progress", platform: "Steam" },
+    actions: [{ label: "Steam", url: "https://store.steampowered.com/app/3281600/Eyes_on_Yuki/", icon: "img/steamLogo.svg" }],
     media: [{ type: "image", src: "img/PortadaEoY.png", alt: "Eyes on Yuki" }]
   },
   mathiatic: {
@@ -382,7 +458,7 @@ const projects = {
     contributions: { es: ["Implementacion de interacciones y flujo de juego.", "Integracion de assets.", "Apoyo en cierre de build para game jam."], en: ["Interaction and game flow implementation.", "Asset integration.", "Build delivery support for the game jam."] },
     tags: ["Game Jam", "Unity", "Action", "Cozy"],
     details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Itch.io" },
-    actions: [{ label: "Itch.io", url: "https://fatildb9.itch.io/burp-voyage" }],
+    actions: [{ label: "Itch.io", url: "https://fatildb9.itch.io/burp-voyage", icon: "img/itchioLogo.png" }],
     media: [{ type: "image", src: "img/portadaBurpVoyage.png", alt: "Burp Voyage" }]
   },
   dmondvorce: {
@@ -393,7 +469,7 @@ const projects = {
     contributions: { es: ["Desarrollo de mecanicas de juego.", "Integracion de reglas competitivas.", "Apoyo en pruebas y ajustes."], en: ["Gameplay mechanics development.", "Competitive rule integration.", "Testing and tuning support."] },
     tags: ["Game Jam", "Unity", "Local Co-op", "Competitive"],
     details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Itch.io" },
-    actions: [{ label: "Itch.io", url: "https://fatildb9.itch.io/d-mon-d-vorce" }],
+    actions: [{ label: "Itch.io", url: "https://fatildb9.itch.io/d-mon-d-vorce", icon: "img/itchioLogo.png" }],
     media: [{ type: "image", src: "img/PortadaD-monD-Vorce.jpeg", alt: "D-mon D-Vorce" }]
   },
   cincodias: {
@@ -404,7 +480,7 @@ const projects = {
     contributions: { es: ["Apoyo en implementacion jugable.", "Integracion de contenido narrativo.", "Pruebas y ajustes de experiencia."], en: ["Gameplay implementation support.", "Narrative content integration.", "Testing and experience tuning."] },
     tags: ["Unity", "Single Player", "Adventure"],
     details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Itch.io" },
-    actions: [{ label: "Itch.io", url: "https://fatildb9.itch.io/5-dias" }],
+    actions: [{ label: "Itch.io", url: "https://fatildb9.itch.io/5-dias", icon: "img/itchioLogo.png" }],
     media: [{ type: "image", src: "img/Portada5Dias.jpeg", alt: "5 Dias" }]
   },
   workrights: {
@@ -415,47 +491,74 @@ const projects = {
     contributions: { es: ["Implementacion de flujo y escenas.", "Integracion de contenido educativo.", "Apoyo en pruebas y presentacion."], en: ["Flow and scene implementation.", "Educational content integration.", "Testing and presentation support."] },
     tags: ["Unity", "Newsgame", "Educational"],
     details: { engine: "Unity", role: "Game developer", status: "Published", platform: "Itch.io" },
-    actions: [{ label: "Itch.io", url: "https://cokirmg.itch.io/works-right-right" }],
+    actions: [{ label: "Itch.io", url: "https://cokirmg.itch.io/works-right-right", icon: "img/itchioLogo.png" }],
     media: [{ type: "image", src: "img/PortadaWorkRightsRight.jpeg", alt: "Works rights, right...?" }]
   }
 };
 
 let currentMedia = 0;
-const lang = localStorage.getItem("selectedLang") || "es";
+let lang = localStorage.getItem("selectedLang") || "es";
 const params = new URLSearchParams(window.location.search);
 const projectKey = params.get("p") || "underpacked";
 const project = projects[projectKey] || projects.underpacked;
+const pageTexts = {
+  es: {
+    navAbout: "Sobre mi",
+    navSkills: "Habilidades",
+    projectsBtn: "Proyectos ▾",
+    dropdownAll: "Ver todos",
+    langBtn: "🌐 Idioma ▾",
+    back: "← Volver a proyectos",
+    aboutHeading: "Sobre el proyecto",
+    contributionHeading: "Mi contribucion",
+    detailsHeading: "Detalles",
+    detailLabels: { engine: "Motor", role: "Rol", status: "Estado", platform: "Plataforma" }
+  },
+  en: {
+    navAbout: "About Me",
+    navSkills: "Skills",
+    projectsBtn: "Projects ▾",
+    dropdownAll: "View all",
+    langBtn: "🌐 Language ▾",
+    back: "← Back to projects",
+    aboutHeading: "About the project",
+    contributionHeading: "My contribution",
+    detailsHeading: "Details",
+    detailLabels: { engine: "Engine", role: "Role", status: "Status", platform: "Platform" }
+  }
+};
 
 function text(value){
   return typeof value === "string" ? value : (value[lang] || value.es);
 }
 
 function renderProject(){
+  const t = pageTexts[lang] || pageTexts.es;
   document.title = project.title + " - Marta Crespo Jornet";
   document.getElementById("project-title").textContent = project.title;
-  document.getElementById("hero-image").src = project.cover;
-  document.getElementById("hero-image").alt = project.title;
   document.getElementById("project-summary").textContent = text(project.summary);
   document.getElementById("project-tags").innerHTML = project.tags.map(tag => `<span class="tag">${tag}</span>`).join("");
-  document.getElementById("external-actions").innerHTML = project.actions.map(action => `<a class="external-button" href="${action.url}" target="_blank" rel="noopener">${action.label}</a>`).join("");
+  document.getElementById("external-actions").innerHTML = project.actions.map(action => {
+    const icon = action.icon ? `<img src="${action.icon}" alt="">` : `<span>${action.label.slice(0, 2)}</span>`;
+    return `<a class="external-button" href="${action.url}" target="_blank" rel="noopener" aria-label="${action.label}" title="${action.label}">${icon}</a>`;
+  }).join("");
   document.getElementById("project-description").innerHTML = text(project.description).map(paragraph => `<p>${paragraph}</p>`).join("");
   document.getElementById("project-contributions").innerHTML = text(project.contributions).map(item => `<li>${item}</li>`).join("");
   document.getElementById("project-details").innerHTML = `
-    <div><dt>Engine</dt><dd>${project.details.engine}</dd></div>
-    <div><dt>Role</dt><dd>${project.details.role}</dd></div>
-    <div><dt>Status</dt><dd>${project.details.status}</dd></div>
-    <div><dt>Platform</dt><dd>${project.details.platform}</dd></div>
+    <div><dt>${t.detailLabels.engine}</dt><dd>${project.details.engine}</dd></div>
+    <div><dt>${t.detailLabels.role}</dt><dd>${project.details.role}</dd></div>
+    <div><dt>${t.detailLabels.status}</dt><dd>${project.details.status}</dd></div>
+    <div><dt>${t.detailLabels.platform}</dt><dd>${project.details.platform}</dd></div>
   `;
-  if(lang === "en"){
-    document.getElementById("nav-home").textContent = "Home";
-    document.getElementById("nav-about").textContent = "About me";
-    document.getElementById("nav-skills").textContent = "Skills";
-    document.getElementById("nav-projects").textContent = "Projects";
-    document.getElementById("back-link").textContent = "< Back to projects";
-    document.getElementById("about-heading").textContent = "About the project";
-    document.getElementById("contribution-heading").textContent = "My contribution";
-    document.getElementById("details-heading").textContent = "Details";
-  }
+  document.getElementById("nav-about").textContent = t.navAbout;
+  document.getElementById("nav-skills").textContent = t.navSkills;
+  document.getElementById("projects-btn").textContent = t.projectsBtn;
+  document.getElementById("dropdown-all").textContent = t.dropdownAll;
+  document.getElementById("lang-btn").textContent = t.langBtn;
+  document.getElementById("back-link").textContent = t.back;
+  document.getElementById("about-heading").textContent = t.aboutHeading;
+  document.getElementById("contribution-heading").textContent = t.contributionHeading;
+  document.getElementById("details-heading").textContent = t.detailsHeading;
   renderMedia();
 }
 
@@ -486,6 +589,53 @@ document.getElementById("next-media").addEventListener("click", () => {
 });
 document.getElementById("menu-toggle").addEventListener("click", () => {
   document.querySelector("nav").classList.toggle("show");
+  closeDropdowns();
+});
+
+const projectsBtn = document.getElementById("projects-btn");
+const projectsDropdown = document.getElementById("projects-dropdown");
+const langBtn = document.getElementById("lang-btn");
+const langDropdown = document.getElementById("lang-dropdown");
+
+function closeDropdowns(){
+  projectsDropdown.classList.remove("show");
+  projectsBtn.setAttribute("aria-expanded", "false");
+  langDropdown.classList.remove("show");
+  langBtn.setAttribute("aria-expanded", "false");
+}
+
+projectsBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
+  const isOpen = projectsDropdown.classList.contains("show");
+  closeDropdowns();
+  if(!isOpen){
+    projectsDropdown.classList.add("show");
+    projectsBtn.setAttribute("aria-expanded", "true");
+  }
+});
+
+langBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
+  const isOpen = langDropdown.classList.contains("show");
+  closeDropdowns();
+  if(!isOpen){
+    langDropdown.classList.add("show");
+    langBtn.setAttribute("aria-expanded", "true");
+  }
+});
+document.querySelectorAll("#lang-dropdown button").forEach((button) => {
+  button.addEventListener("click", () => {
+    lang = button.dataset.lang;
+    localStorage.setItem("selectedLang", lang);
+    closeDropdowns();
+    renderProject();
+  });
+});
+document.addEventListener("click", () => {
+  closeDropdowns();
+});
+document.querySelector("nav").addEventListener("click", (event) => {
+  event.stopPropagation();
 });
 document.getElementById("year").textContent = new Date().getFullYear();
 renderProject();
