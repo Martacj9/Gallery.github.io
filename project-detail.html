@@ -395,7 +395,14 @@ const projects = {
       { label: "Steam", url: "https://store.steampowered.com/app/3587480/Underpacked/", icon: "img/steamLogo.svg" },
       { label: "Linktree", url: "https://linktr.ee/drunkenduckco", icon: "img/linktreeLogo.svg" }
     ],
-    media: [{ type: "video", src: "https://youtu.be/Yqu8Kfay-nQ?si=7AJrBahPHi-x_iaM", title: "Underpacked trailer" }{ type: "image", src: "img/UNDERPACKED! - SCREENSHOT Nº 1 LOBBY.png", alt: "Underpacked" } { type: "image", src: "img/UNDERPACKED! - SCREENSHOT Nº 2 TUTORIAL.png", alt: "Underpacked" } ]
+    media: [
+      { type: "video", src: "https://www.youtube.com/embed/Yqu8Kfay-nQ", title: "Underpacked trailer" },
+      { type: "image", src: "img/UNDERPACKED! - SCREENSHOT Nº 1 LOBBY.png", alt: "Underpacked lobby" },
+      { type: "image", src: "img/UNDERPACKED! - SCREENSHOT Nº 2 TUTORIAL.png", alt: "Underpacked tutorial" },
+      { type: "image", src: "img/UNDERPACKED! - SCREENSHOT Nº 3 LEVEL 1.png", alt: "Underpacked level 1" },
+      { type: "image", src: "img/UNDERPACKED! - SCREENSHOT Nº 4 LEVEL 2.png", alt: "Underpacked level 2" },
+      { type: "image", src: "img/UNDERPACKED! - SCREENSHOT Nº 5 LEVEL 3.png", alt: "Underpacked level 3" }
+    ]
   },
   mask: {
     title: "M.A.S.K Mucha Lucha",
@@ -561,7 +568,7 @@ function renderMedia(){
   const media = project.media[currentMedia];
   const frame = document.getElementById("media-frame");
   if(media.type === "video"){
-    frame.innerHTML = `<iframe src="${media.src}" title="${media.title || project.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+    frame.innerHTML = `<iframe src="${toEmbedUrl(media.src)}" title="${media.title || project.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
   } else {
     frame.innerHTML = `<img src="${media.src}" alt="${media.alt || project.title}">`;
   }
@@ -572,6 +579,15 @@ function renderMedia(){
       renderMedia();
     });
   });
+}
+
+function toEmbedUrl(url){
+  if(url.includes("youtube.com/embed/")) return url;
+  const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+  if(shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  const longMatch = url.match(/[?&]v=([^?&]+)/);
+  if(longMatch) return `https://www.youtube.com/embed/${longMatch[1]}`;
+  return url;
 }
 
 document.getElementById("prev-media").addEventListener("click", () => {
